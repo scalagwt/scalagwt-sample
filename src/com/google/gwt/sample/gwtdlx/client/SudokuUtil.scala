@@ -1,3 +1,5 @@
+package com.google.gwt.sample.gwtdlx.client
+
 /*
  * Copyright 2009 Google Inc.
  * 
@@ -13,8 +15,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-package com.google.gwt.sample.gwtdlx.solver
 
 import scala.collection.mutable.Set
 

@@ -29,7 +29,6 @@ import com.google.gwt.user.client.ui._
  */
 class GwtDlx extends EntryPoint {
    private val ajax: Label = new Label("ajax: the cloud is thinking.")
-   private val api: SudokuApiAsync = GWT.create(classOf[SudokuApi])
    private val noSolution: HTML = new HTML("&empty;")
 
    def onModuleLoad: Unit = {
@@ -77,7 +76,7 @@ class GwtDlx extends EntryPoint {
          if (str.length == 1 && Character.isDigit(str(0))) str(0) - '0'
          else 0
       }
-      api.solveSudoku(board, new Callback)
+      solve(board)
    }
 
    private def getBox(r: Int, c: Int): InputElement = {
@@ -85,21 +84,19 @@ class GwtDlx extends EntryPoint {
       Document.get.getElementById(cellname).asInstanceOf[InputElement]
    }
 
-   private class Callback extends AsyncCallback[Array[Array[Int]]] {
-      def onFailure(caught: Throwable) = {}
-      def onSuccess(result: Array[Array[Int]]) = {
-         ajax.setVisible(false)
-         if (result == null) {
-            noSolution.setVisible(true)
-         } else {
-            noSolution.setVisible(false)
-            for (r <- 0 until result.length) {
-               for (c <- 0 until result(r).length) {
-                  getBox(r, c).setValue(result(r)(c) + "")
-               }
+   private def solve(board: Array[Array[Int]]) = {
+      val result = (new Sudoku(board)).solve
+      ajax.setVisible(false)
+      if (result == null) {
+         noSolution.setVisible(true)
+      } else {
+         noSolution.setVisible(false)
+         for (r <- 0 until result.length) {
+            for (c <- 0 until result(r).length) {
+               getBox(r, c).setValue(result(r)(c) + "")
             }
-            ajax.setVisible(false)
          }
+         ajax.setVisible(false)
       }
    }
 }
