@@ -71,41 +71,37 @@ object Scheduled {
       (k: ScheduleCont) =>  Delayed(k, delayMs)
    }
 
-   private case class Deferred(k: Unit => Schedule) extends Schedule {
-      def schedule = Scheduler.get.scheduleDeferred(new ContinuationCommand(k))
+   private case class Deferred(k: ScheduleCont) extends Schedule with ScheduledCommand {
+      def schedule = Scheduler.get.scheduleDeferred(this)
 
-      private class ContinuationCommand(k: ScheduleCont) extends ScheduledCommand {
-         def execute = k(()).schedule
-      }
+      def execute = k(()).schedule
    }
 
-   private case class Incremental(k: Unit => Schedule) extends Schedule {
-      def schedule = Scheduler.get.scheduleIncremental(new IncrementalContinuationCommand(k))
+   private case class Incremental(k: ScheduleCont) extends Schedule with RepeatingCommand {
+      private var remaining: ScheduleCont = k
 
-      private class IncrementalContinuationCommand(private var k: ScheduleCont) extends RepeatingCommand {
-         def execute = {
-            k(null) match {
-               case Incremental(k2) => {
-                  k = k2
-                  true
-               }
-               case s => {
-                  s.schedule
-                  false
-               }
+      def schedule = Scheduler.get.scheduleIncremental(this)
+
+      def execute = {
+         remaining(()) match {
+            case Incremental(k2) => {
+               remaining = k2
+               true
+            }
+            case s => {
+               s.schedule
+               false
             }
          }
       }
    }
 
-   private case class Delayed(k: Unit => Schedule, delayMs: Int) extends Schedule {
-      def schedule = Scheduler.get.scheduleFixedDelay(new DelayedContinuationCommand(k), delayMs)
+   private case class Delayed(k: ScheduleCont, delayMs: Int) extends Schedule with RepeatingCommand {
+      def schedule = Scheduler.get.scheduleFixedDelay(this, delayMs)
 
-      private class DelayedContinuationCommand(k: ScheduleCont) extends RepeatingCommand {
-         def execute = {
-            k(()).schedule
-            false
-         }
+      def execute = {
+         k(()).schedule
+         false
       }
    }
 
