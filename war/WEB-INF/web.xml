@@ -5,7 +5,7 @@
 
 <web-app>
   <welcome-file-list>
-    <welcome-file>input.jsp</welcome-file>
+    <welcome-file>GwtDlx.html</welcome-file>
   </welcome-file-list>
   
   <servlet>

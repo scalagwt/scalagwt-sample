@@ -1,3 +1,5 @@
+package com.google.gwt.sample.gwtdlx.client
+
 /*
  * Copyright 2009 Google Inc.
  * 
@@ -14,14 +16,10 @@
  * the License.
  */
 
-package com.google.gwt.sample.gwtdlx.solver
-
 import scala.collection.mutable.Set
 
 object Util {
-  def xrange(n:Int) = {
-    new Range(0,n,1)
-  }
+  def xrange(n:Int) = new Range(0,n,1)
 
   /**
    * Get the unique members of a list.
@@ -36,7 +34,7 @@ object Util {
   }
 
   def make2DArray(lst:List[List[Int]]) = {
-    var out = new Array[Array[Int]](lst.length, lst(0).length)
+    val out = Array.ofDim[Int](lst.length, lst(0).length)
     var rowindex = 0
     var colindex = 0
 

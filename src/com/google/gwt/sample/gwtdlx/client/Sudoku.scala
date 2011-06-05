@@ -1,3 +1,5 @@
+package com.google.gwt.sample.gwtdlx.client
+
 /*
  * Copyright 2009 Google Inc.
  * 
@@ -14,9 +16,8 @@
  * the License.
  */
 
-package com.google.gwt.sample.gwtdlx.solver
-
 import collection.mutable._
+import com.google.gwt.sample.gwtdlx.solver.SparseMatrix
 
 /**
  * Representation of a Sudoku puzzle, with methods to convert back and forth
