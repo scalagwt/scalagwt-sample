@@ -2,7 +2,7 @@
 <project name="Hello" default="build" basedir=".">
   <!-- Arguments -style PRETTY or -logLevel DEBUG to gwtc and devmode targets -->
   <property name="gwt.args" value="-draftCompile -ea -style pretty -logLevel TRACE" />
-  <property name="scala.args" value="-g:notailcalls -Xplugin:${basedir}/lib/scala/factorymanifests.jar"/>
+  <property name="scala.args" value="-g:notailcalls -Xplugin:${basedir}/lib/scala/factorymanifests.jar -Xplugin:lib/scala/continuations.jar -P:continuations:enable"/>
 
   <path id="scala.class.path">
     <fileset dir="lib/scala">

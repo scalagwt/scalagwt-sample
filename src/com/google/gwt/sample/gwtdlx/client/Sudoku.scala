@@ -17,6 +17,7 @@ package com.google.gwt.sample.gwtdlx.client
  */
 
 import collection.mutable._
+import Scheduled._
 
 /**
  * Representation of a Sudoku puzzle, with methods to convert back and forth
@@ -31,28 +32,25 @@ class Sudoku(squares : Array[Array[Int]]) {
    * Solve the sudoku puzzle. Return value is a nested list in the same format
    * as the input to the constructor.
    */
-  def solve():Array[Array[Int]] = {
+  def solve(): Option[Array[Array[Int]]] @schedulable = {
     val dlxSoln = dlx.search(0)
+    dlxSoln map { soln =>
+       val nonNulls = soln.filter( (node => (node != null)) )
+       val solnRows = nonNulls.map( (node => node.rowindex) )
 
-    if (dlxSoln == null) {
-      return null
+       val dlxEncodedSoln = solnRows.map( (row => dlxrows(row)) )
+       val rcvs = dlxEncodedSoln.map(SudokuUtil.dlxRowToRcv)
+
+       val out = SudokuUtil.buildBlankBoard()
+
+       for (rcv <- rcvs) {
+          val r = rcv._1
+          val c = rcv._2
+          val v = rcv._3
+          out(r)(c) = v
+       }
+
+       out
     }
-
-    val nonNulls = dlxSoln.filter( (node => (node != null)) )
-    val solnRows = nonNulls.map( (node => node.rowindex) )
-
-    val dlxEncodedSoln = solnRows.map( (row => dlxrows(row)) )
-    val rcvs = dlxEncodedSoln.map(SudokuUtil.dlxRowToRcv)
-
-    val out = SudokuUtil.buildBlankBoard()
-
-    for (rcv <- rcvs) {
-      val r = rcv._1
-      val c = rcv._2
-      val v = rcv._3
-      out(r)(c) = v
-    }
-
-    return out
   }
 }

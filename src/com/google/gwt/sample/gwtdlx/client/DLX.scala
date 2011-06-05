@@ -17,6 +17,7 @@ package com.google.gwt.sample.gwtdlx.client
  */
 
 import collection.mutable._
+import Scheduled._
 
 class DLX(matrix : SparseMatrix) {
   val header = matrix.header
@@ -50,42 +51,43 @@ class DLX(matrix : SparseMatrix) {
    * Find a list of rows (nodes in rows, at least) that satisfies the set cover
    * problem.
    */
-  def search(k:Int):Array[Node] = {
+  def search(k:Int):Option[Array[Node]] @schedulable = {
+     if(header.right == header) {
+        yieldc
+        Some(solution)
+     } else {
+        yieldc
+        var here:Node = null
+        val tocover = choose_column()
+        matrix.cover(tocover)
 
-    if(header.right == header) {
-      return solution
-    }
+        var soln: Option[Array[Node]] = None
+        var rowstart = tocover.down
+        while (rowstart != tocover && soln.isEmpty) {
+           solution(k) = rowstart
 
-    var here:Node = null
-    val tocover = choose_column()
-    matrix.cover(tocover)
+           here = rowstart.right
+           while (here != rowstart) {
+              matrix.cover(here.column)
+              here = here.right
+           }
+           soln = search(k+1)
+           if (soln.isEmpty) {
 
-    var rowstart = tocover.down
-    while (rowstart != tocover) {
-      solution(k) = rowstart
+              // Didn't win, backing up.
+              rowstart = solution(k)
 
-      here = rowstart.right
-      while (here != rowstart) {
-        matrix.cover(here.column)
-        here = here.right
-      }
-      val further = search(k+1)
-      if(further != null) {
-        return further
-      }
+              here = rowstart.left
+              while (here != rowstart) {
+                 matrix.uncover(here.column)
+                 here = here.left
+              }
+              rowstart = rowstart.down
+           }
+        }
 
-      // Didn't win, backing up.
-      rowstart = solution(k)
-
-      here = rowstart.left
-      while (here != rowstart) {
-        matrix.uncover(here.column)
-        here = here.left
-      }
-      rowstart = rowstart.down
-    }
-
-    matrix.uncover(tocover)
-    return null
+        if (soln.isEmpty) matrix.uncover(tocover)
+        soln
+     }
   }
 }

@@ -96,7 +96,7 @@ class GwtDlx extends EntryPoint {
          if (str.length == 1 && Character.isDigit(str(0))) str(0) - '0'
          else 0
       }
-      Scheduler.get().scheduleDeferred { () => solve(board) }
+      solve(board)
    }
 
    private def createCell: TextBox = {
@@ -112,18 +112,22 @@ class GwtDlx extends EntryPoint {
      new ScheduledCommand { def execute() = f() }
 
    private def solve(board: Array[Array[Int]]) = {
-      val result = (new Sudoku(board)).solve
-      ajax.setVisible(false)
-      if (result == null) {
-         noSolution.setVisible(true)
-      } else {
-         noSolution.setVisible(false)
-         for (r <- 0 until result.length) {
-            for (c <- 0 until result(r).length) {
-               getBox(r, c).setValue(result(r)(c) + "")
+      import Scheduled._
+      sched {
+         val result = (new Sudoku(board)).solve
+         ajax.setVisible(false)
+         result match {
+            case None => noSolution.setVisible(true)
+            case Some(soln) => {
+               noSolution.setVisible(false)
+               for (r <- 0 until soln.length) {
+                  for (c <- 0 until soln(r).length) {
+                     getBox(r, c).setValue(soln(r)(c) + "")
+                  }
+               }
+               ajax.setVisible(false)
             }
          }
-         ajax.setVisible(false)
       }
    }
 }
