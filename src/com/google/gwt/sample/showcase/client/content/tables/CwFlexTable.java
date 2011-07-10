@@ -33,7 +33,6 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 /**
  * Example file.
@@ -91,17 +90,16 @@ public class CwFlexTable extends ContentWidget {
   public Widget onInitialize() {
     // Create a Flex Table
     final FlexTable flexTable = new FlexTable();
-    FlexCellFormatter cellFormatter = flexTable.getFlexCellFormatter();
     flexTable.addStyleName("cw-FlexTable");
     flexTable.setWidth("32em");
     flexTable.setCellSpacing(5);
     flexTable.setCellPadding(3);
 
     // Add some text
-    cellFormatter.setHorizontalAlignment(0, 1,
+    flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 1,
         HasHorizontalAlignment.ALIGN_LEFT);
     flexTable.setHTML(0, 0, constants.cwFlexTableDetails());
-    cellFormatter.setColSpan(0, 0, 2);
+    flexTable.getFlexCellFormatter().setColSpan(0, 0, 2);
 
     // Add a button that will add more rows to the table
     Button addRowButton = new Button(constants.cwFlexTableAddRow(),
@@ -124,7 +122,7 @@ public class CwFlexTable extends ContentWidget {
     buttonPanel.add(addRowButton);
     buttonPanel.add(removeRowButton);
     flexTable.setWidget(0, 1, buttonPanel);
-    cellFormatter.setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_TOP);
+    flexTable.getFlexCellFormatter().setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_TOP);
 
     // Add two rows to start
     addRow(flexTable);

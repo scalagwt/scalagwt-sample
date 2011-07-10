@@ -36,7 +36,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 /**
  * Example file.
@@ -142,7 +141,6 @@ public class CwPluralFormsExample extends ContentWidget {
 
     // Use a FlexTable to layout the content
     FlexTable layout = new FlexTable();
-    FlexCellFormatter formatter = layout.getFlexCellFormatter();
     layout.setCellSpacing(5);
 
     // Add a link to the source code of the Interface
@@ -157,7 +155,7 @@ public class CwPluralFormsExample extends ContentWidget {
     linkPanel.add(new HTML(constants.cwPluralFormsExampleLinkText()));
     linkPanel.add(link);
     layout.setWidget(0, 0, linkPanel);
-    formatter.setColSpan(0, 0, 2);
+    layout.getFlexCellFormatter().setColSpan(0, 0, 2);
 
     // Add argument 0
     arg0Box = new TextBox();
@@ -169,7 +167,7 @@ public class CwPluralFormsExample extends ContentWidget {
     formattedMessage = new Label();
     layout.setHTML(5, 0, constants.cwPluralFormsExampleFormattedLabel());
     layout.setWidget(5, 1, formattedMessage);
-    formatter.setVerticalAlignment(5, 0, HasVerticalAlignment.ALIGN_TOP);
+    layout.getFlexCellFormatter().setVerticalAlignment(5, 0, HasVerticalAlignment.ALIGN_TOP);
 
     // Add handlers to all of the argument boxes
     KeyUpHandler keyUpHandler = new KeyUpHandler() {

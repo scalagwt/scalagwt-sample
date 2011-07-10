@@ -35,7 +35,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 import java.util.Map;
 
@@ -120,7 +119,6 @@ public class CwConstantsExample extends ContentWidget {
 
     // Use a FlexTable to layout the content
     FlexTable layout = new FlexTable();
-    FlexCellFormatter formatter = layout.getFlexCellFormatter();
     layout.setCellSpacing(5);
 
     // Add a link to the source code of the Interface
@@ -136,7 +134,7 @@ public class CwConstantsExample extends ContentWidget {
     linkPanel.add(new HTML(constants.cwConstantsExampleLinkText()));
     linkPanel.add(link);
     layout.setWidget(0, 0, linkPanel);
-    formatter.setColSpan(0, 0, 2);
+    layout.getFlexCellFormatter().setColSpan(0, 0, 2);
 
     // Show the first name
     TextBox firstNameBox = new TextBox();
