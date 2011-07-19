@@ -13,27 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.gwt.sample.showcase.client.content.i18n;
+package com.google.gwt.sample.showcase.client.content.i18n
 
-import com.google.gwt.i18n.client.ConstantsWithLookup;
+import com.google.gwt.i18n.client.ConstantsWithLookup
 
 /**
  * Internationalized constants used to demonstrate {@link ConstantsWithLookup}.
  */
-public interface ColorConstants extends ConstantsWithLookup {
-  String black();
+trait ColorConstants extends ConstantsWithLookup {
+  def black(): String
 
-  String blue();
+  def blue(): String
 
-  String green();
+  def green(): String
 
-  String grey();
+  def grey(): String
 
-  String lightGrey();
+  def lightGrey(): String
 
-  String red();
+  def red(): String
 
-  String white();
+  def white(): String
 
-  String yellow();
+  def yellow(): String
 }
