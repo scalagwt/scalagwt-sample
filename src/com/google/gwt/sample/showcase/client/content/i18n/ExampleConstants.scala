@@ -13,21 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.gwt.sample.showcase.client.content.i18n;
+package com.google.gwt.sample.showcase.client.content.i18n
 
-import com.google.gwt.i18n.client.Constants;
+import com.google.gwt.i18n.client.Constants
 
-import java.util.Map;
+import java.util.Map
 
 /**
  * Internationalized constants used to demonstrate {@link Constants}.
  */
-public interface ExampleConstants extends Constants {
-  Map<String, String> colorMap();
+trait ExampleConstants extends Constants {
+  def colorMap(): Map[String, String]
 
-  String favoriteColor();
+  def favoriteColor(): String
 
-  String firstName();
+  def firstName(): String
 
-  String lastName();
+  def lastName(): String
 }
