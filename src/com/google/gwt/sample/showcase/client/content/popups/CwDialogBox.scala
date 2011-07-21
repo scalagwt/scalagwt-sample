@@ -22,6 +22,7 @@ import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.i18n.client.LocaleInfo
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.Showcase
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
@@ -86,12 +87,10 @@ class CwDialogBox(constants: CwDialogBox.CwConstants) extends ContentWidget(cons
 
     // Create a button to show the dialog Box
     val openButton = new Button(constants.cwDialogBoxShowButton,
-        new ClickHandler() {
-          def onClick(sender: ClickEvent) {
-            dialogBox.center()
-            dialogBox.show()
-          }
-        })
+      { _: ClickEvent =>
+          dialogBox.center()
+          dialogBox.show()
+      })
 
     // Create a ListBox
     val listDesc = new HTML("<br><br><br>" + constants.cwDialogBoxListBoxInfo)
@@ -152,9 +151,7 @@ class CwDialogBox(constants: CwDialogBox.CwConstants) extends ContentWidget(cons
 
     // Add a close button at the bottom of the dialog
     val closeButton = new Button(constants.cwDialogBoxClose,
-        new ClickHandler() {
-          def onClick(event: ClickEvent) = dialogBox.hide()
-        })
+                                 (_: ClickEvent) => dialogBox.hide())
     dialogContents.add(closeButton)
     if (LocaleInfo.getCurrentLocale().isRTL()) {
       dialogContents.setCellHorizontalAlignment(closeButton,

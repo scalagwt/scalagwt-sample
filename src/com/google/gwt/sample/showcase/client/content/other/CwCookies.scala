@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.ClickEvent
 import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.JavaConversions._
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
@@ -129,42 +130,35 @@ class CwCookies(constants: CwCookies.CwConstants) extends ContentWidget(constant
     mainLayout.setWidget(2, 2, setCookieButton)
 
     // Add a handler to set the cookie value
-    setCookieButton.addClickHandler(new ClickHandler() {
-      def onClick(event: ClickEvent) {
-        val name = cookieNameBox.getText()
-        val value = cookieValueBox.getText()
-        val expires = new Date((new Date()).getTime() + COOKIE_TIMEOUT)
+    setCookieButton onClick { _ =>
+      val name = cookieNameBox.getText()
+      val value = cookieValueBox.getText()
+      val expires = new Date((new Date()).getTime() + COOKIE_TIMEOUT)
 
-        // Verify the name is valid
-        if (name.length() < 1) {
-          Window.alert(constants.cwCookiesInvalidCookie())
-          return
-        }
-
+      // Verify the name is valid
+      if (name.length() < 1) {
+        Window.alert(constants.cwCookiesInvalidCookie())
+      } else {
         // Set the cookie value
         Cookies.setCookie(name, value, expires)
         refreshExistingCookies(name)
       }
-    })
+    }
 
     // Add a handler to select an existing cookie
-    existingCookiesBox.addChangeHandler(new ChangeHandler() {
-      def onChange(event: ChangeEvent) = updateExstingCookie()
-    })
+    existingCookiesBox onChange { _ => updateExstingCookie() }
 
     // Add a handler to delete an existing cookie
-    deleteCookieButton.addClickHandler(new ClickHandler() {
-      def onClick(event: ClickEvent) {
-        val selectedIndex = existingCookiesBox.getSelectedIndex()
-        if (selectedIndex > -1
-            && selectedIndex < existingCookiesBox.getItemCount()) {
-          val cookieName = existingCookiesBox.getValue(selectedIndex)
-          Cookies.removeCookie(cookieName)
-          existingCookiesBox.removeItem(selectedIndex)
-          updateExstingCookie()
-        }
+    deleteCookieButton onClick { _ =>
+      val selectedIndex = existingCookiesBox.getSelectedIndex()
+      if (selectedIndex > -1
+          && selectedIndex < existingCookiesBox.getItemCount()) {
+        val cookieName = existingCookiesBox.getValue(selectedIndex)
+        Cookies.removeCookie(cookieName)
+        existingCookiesBox.removeItem(selectedIndex)
+        updateExstingCookie()
       }
-    })
+    }
 
     // Return the main layout
     refreshExistingCookies(null)
