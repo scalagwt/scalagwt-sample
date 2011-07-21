@@ -381,7 +381,7 @@ class Showcase extends EntryPoint {
             }
          }
       }
-      localeBox.addChangeHandler { event: ChangeEvent =>
+      localeBox addChangeHandler {
          val localeName = localeBox.getValue(localeBox.getSelectedIndex)
          val builder = Location.createUrlBuilder.setParameter("locale", localeName)
          Window.Location.replace(builder.buildString)
@@ -398,7 +398,7 @@ class Showcase extends EntryPoint {
       ShowcaseConstants.STYLE_THEMES foreach { theme =>
          val button: ThemeButton = new ThemeButton(theme)
          styleWrapper.add(button)
-         button.addClickHandler { event: ClickEvent =>
+         button addClickHandler {
             // Update the current theme
             CUR_THEME = button.theme
 

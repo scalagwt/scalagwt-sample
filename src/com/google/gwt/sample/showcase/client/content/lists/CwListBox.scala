@@ -100,7 +100,7 @@ class CwListBox(@ShowcaseData private val constants: CwListBox.CwConstants)
     hPanel.add(multiBoxPanel)
 
     // Add a handler to handle drop box events
-    dropBox.addChangeHandler { event: ChangeEvent =>
+    dropBox addChangeHandler {
       showCategory(multiBox, dropBox.getSelectedIndex)
       multiBox.ensureDebugId("cwListBox-multiBox")
     }
