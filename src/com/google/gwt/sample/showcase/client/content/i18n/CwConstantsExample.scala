@@ -22,6 +22,7 @@ import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.event.logical.shared.SelectionEvent
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.JavaConversions._
 import com.google.gwt.sample.showcase.client.ShowcaseConstants
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
@@ -100,11 +101,7 @@ class CwConstantsExample(constants: CwConstantsExample.CwConstants) extends Cont
     // Add a link to the source code of the Interface
     val link = new HTML(
         " <a href=\"javascript:void(0);\">ExampleConstants</a>")
-    link.addClickHandler(new ClickHandler() {
-      def onClick(event: ClickEvent) {
-        selectTab(2)
-      }
-    })
+    link onClick { selectTab(2) }
     val linkPanel = new HorizontalPanel()
     linkPanel.setSpacing(3)
     linkPanel.add(new HTML(constants.cwConstantsExampleLinkText()))
