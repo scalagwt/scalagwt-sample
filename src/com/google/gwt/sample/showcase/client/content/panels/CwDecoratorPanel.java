@@ -28,7 +28,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 /**
  * Example file.
@@ -94,12 +93,11 @@ public class CwDecoratorPanel extends ContentWidget {
     // Create a table to layout the form options
     FlexTable layout = new FlexTable();
     layout.setCellSpacing(6);
-    FlexCellFormatter cellFormatter = layout.getFlexCellFormatter();
 
     // Add a title to the form
     layout.setHTML(0, 0, constants.cwDecoratorPanelFormTitle());
-    cellFormatter.setColSpan(0, 0, 2);
-    cellFormatter.setHorizontalAlignment(0, 0,
+    layout.getFlexCellFormatter().setColSpan(0, 0, 2);
+    layout.getFlexCellFormatter().setHorizontalAlignment(0, 0,
         HasHorizontalAlignment.ALIGN_CENTER);
 
     // Add some standard form options

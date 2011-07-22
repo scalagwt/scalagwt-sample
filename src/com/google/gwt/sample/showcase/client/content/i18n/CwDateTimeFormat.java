@@ -34,7 +34,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 
 import java.util.Date;
 
@@ -129,7 +128,6 @@ public class CwDateTimeFormat extends ContentWidget {
   public Widget onInitialize() {
     // Use a Grid to layout the content
     Grid layout = new Grid(4, 2);
-    CellFormatter formatter = layout.getCellFormatter();
     layout.setCellSpacing(5);
 
     // Add a field to select the pattern
@@ -178,7 +176,7 @@ public class CwDateTimeFormat extends ContentWidget {
     formattedBox.setWidth("17em");
     layout.setHTML(3, 0, constants.cwDateTimeFormatFormattedLabel());
     layout.setWidget(3, 1, formattedBox);
-    formatter.setVerticalAlignment(3, 0, HasVerticalAlignment.ALIGN_TOP);
+    layout.getCellFormatter().setVerticalAlignment(3, 0, HasVerticalAlignment.ALIGN_TOP);
 
     // Return the layout Widget
     updatePattern();

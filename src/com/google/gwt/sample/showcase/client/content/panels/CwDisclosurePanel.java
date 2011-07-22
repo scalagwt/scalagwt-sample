@@ -33,7 +33,6 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
 /**
  * Example file.
@@ -129,12 +128,11 @@ public class CwDisclosurePanel extends ContentWidget {
     FlexTable layout = new FlexTable();
     layout.setCellSpacing(6);
     layout.setWidth("300px");
-    FlexCellFormatter cellFormatter = layout.getFlexCellFormatter();
 
     // Add a title to the form
     layout.setHTML(0, 0, constants.cwDisclosurePanelFormTitle());
-    cellFormatter.setColSpan(0, 0, 2);
-    cellFormatter.setHorizontalAlignment(0, 0,
+    layout.getFlexCellFormatter().setColSpan(0, 0, 2);
+    layout.getFlexCellFormatter().setHorizontalAlignment(0, 0,
         HasHorizontalAlignment.ALIGN_CENTER);
 
     // Add some standard form options
@@ -163,7 +161,7 @@ public class CwDisclosurePanel extends ContentWidget {
     advancedDisclosure.ensureDebugId("cwDisclosurePanel");
     advancedDisclosure.setContent(advancedOptions);
     layout.setWidget(3, 0, advancedDisclosure);
-    cellFormatter.setColSpan(3, 0, 2);
+    layout.getFlexCellFormatter().setColSpan(3, 0, 2);
 
     // Wrap the contents in a DecoratorPanel
     DecoratorPanel decPanel = new DecoratorPanel();
