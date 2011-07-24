@@ -21,6 +21,7 @@ import com.google.gwt.event.dom.client.ClickEvent
 import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.Showcase
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
@@ -79,18 +80,16 @@ class CwBasicPopup(constants: CwBasicPopup.CwConstants) extends ContentWidget(co
 
     // Create a button to show the popup
     val openButton = new Button(constants.cwBasicPopupShowButton,
-        new ClickHandler() {
-          def onClick(event: ClickEvent) {
-            // Reposition the popup relative to the button
-            val source = event.getSource.asInstanceOf[Widget]
-            val left = source.getAbsoluteLeft + 10
-            val top = source.getAbsoluteTop + 10
-            simplePopup.setPopupPosition(left, top)
+      { event: ClickEvent =>
+          // Reposition the popup relative to the button
+          val source = event.getSource.asInstanceOf[Widget]
+          val left = source.getAbsoluteLeft + 10
+          val top = source.getAbsoluteTop + 10
+          simplePopup.setPopupPosition(left, top)
 
-            // Show the popup
-            simplePopup.show()
-          }
-        })
+          // Show the popup
+          simplePopup.show()
+      })
 
     // Create a popup to show the full size image
     val jimmyFull = new Image(Showcase.images.jimmy)
@@ -98,17 +97,13 @@ class CwBasicPopup(constants: CwBasicPopup.CwConstants) extends ContentWidget(co
     imagePopup.setAnimationEnabled(true)
     imagePopup.ensureDebugId("cwBasicPopup-imagePopup")
     imagePopup.setWidget(jimmyFull)
-    jimmyFull.addClickHandler(new ClickHandler() {
-      def onClick(event: ClickEvent) = imagePopup.hide()
-    })
+    jimmyFull onClick { imagePopup.hide() }
 
     // Add an image thumbnail
     val jimmyThumb = new Image(Showcase.images.jimmyThumb)
     jimmyThumb.ensureDebugId("cwBasicPopup-thumb")
     jimmyThumb.addStyleName("cw-BasicPopup-thumb")
-    jimmyThumb.addClickHandler(new ClickHandler() {
-      def onClick(event: ClickEvent) = imagePopup.center()
-    })
+    jimmyThumb onClick { imagePopup.center() }
 
     // Add the widgets to a panel
     val vPanel = new VerticalPanel()

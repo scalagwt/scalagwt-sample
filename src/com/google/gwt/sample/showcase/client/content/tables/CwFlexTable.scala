@@ -21,6 +21,7 @@ import com.google.gwt.event.dom.client.ClickEvent
 import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.Showcase
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
@@ -82,15 +83,11 @@ class CwFlexTable(constants: CwFlexTable.CwConstants) extends ContentWidget(cons
 
     // Add a button that will add more rows to the table
     val addRowButton = new Button(constants.cwFlexTableAddRow(),
-        new ClickHandler() {
-          def onClick(event: ClickEvent) = addRow(flexTable)
-        })
+                                  () => addRow(flexTable))
     addRowButton.addStyleName("sc-FixedWidthButton")
 
     val removeRowButton = new Button(constants.cwFlexTableRemoveRow(),
-        new ClickHandler() {
-          def onClick(event: ClickEvent) = removeRow(flexTable)
-        })
+                                     () => removeRow(flexTable))
     removeRowButton.addStyleName("sc-FixedWidthButton")
     val buttonPanel = new VerticalPanel()
     buttonPanel.setStyleName("cw-FlexTable-buttonPanel")
