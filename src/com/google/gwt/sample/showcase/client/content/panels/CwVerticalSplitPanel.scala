@@ -28,89 +28,62 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * Example file.
- */
-@ShowcaseStyle(".gwt-VerticalSplitPanel")
-public class CwVerticalSplitPanel extends ContentWidget {
+object CwVerticalSplitPanel {
   /**
    * The constants used in this Content Widget.
    */
   @ShowcaseSource
-  public static interface CwConstants extends Constants,
-      ContentWidget.CwConstants {
-    String cwVerticalSplitPanelDescription();
+  trait CwConstants extends Constants with ContentWidget.CwConstants {
+    def cwVerticalSplitPanelDescription(): String
 
-    String cwVerticalSplitPanelName();
+    def cwVerticalSplitPanelName(): String
 
-    String cwVerticalSplitPanelText();
+    def cwVerticalSplitPanelText(): String
   }
+}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private CwConstants constants;
+/**
+ * Example file.
+ */
+@ShowcaseStyle(Array(".gwt-VerticalSplitPanel"))
+class CwVerticalSplitPanel(constants: CwVerticalSplitPanel.CwConstants) extends ContentWidget(constants) {
 
-  /**
-   * Constructor.
-   * 
-   * @param constants the constants
-   */
-  public CwVerticalSplitPanel(CwConstants constants) {
-    super(constants);
-    this.constants = constants;
-  }
+  override def getDescription() = constants.cwVerticalSplitPanelDescription
 
-  @Override
-  public String getDescription() {
-    return constants.cwVerticalSplitPanelDescription();
-  }
-
-  @Override
-  public String getName() {
-    return constants.cwVerticalSplitPanelName();
-  }
+  override def getName() = constants.cwVerticalSplitPanelName
 
   /**
    * Initialize this example.
    */
   @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
+  override def onInitialize(): Widget = {
     // Create a Vertical Split Panel
-    VerticalSplitPanel vSplit = new VerticalSplitPanel();
+    val vSplit = new VerticalSplitPanel();
     vSplit.ensureDebugId("cwVerticalSplitPanel");
     vSplit.setSize("500px", "350px");
     vSplit.setSplitPosition("30%");
 
     // Add some content
-    String randomText = constants.cwVerticalSplitPanelText() + " ";
-    for (int i = 0; i < 2; i++) {
+    var randomText = constants.cwVerticalSplitPanelText + " ";
+    for (i <- 0 until 2) {
       randomText += randomText;
     }
     vSplit.setTopWidget(new HTML(randomText));
     vSplit.setBottomWidget(new HTML(randomText));
 
     // Wrap the split panel in a decorator panel
-    DecoratorPanel decPanel = new DecoratorPanel();
+    val decPanel = new DecoratorPanel();
     decPanel.setWidget(vSplit);
 
     // Return the content
     return decPanel;
   }
 
-  @Override
-  public void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+  override def asyncOnInitialize(callback: AsyncCallback[Widget]) = {
     GWT.runAsync(new RunAsyncCallback() {
+      def onFailure(caught: Throwable) = callback.onFailure(caught)
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
-
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
+      def onSuccess() = callback.onSuccess(onInitialize())
+    })
   }
 }

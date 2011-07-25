@@ -41,139 +41,116 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import scala.collection.mutable.Map
+import scala.collection.mutable.LinkedHashMap
 
-/**
- * Example file.
- */
-public class CwAbsolutePanel extends ContentWidget {
+object CwAbsolutePanel {
   /**
    * The constants used in this Content Widget.
    */
   @ShowcaseSource
-  public static interface CwConstants extends Constants, ContentWidget.CwConstants {
-    String cwAbsolutePanelClickMe();
+  trait CwConstants extends Constants with ContentWidget.CwConstants {
+    def cwAbsolutePanelClickMe(): String
 
-    String cwAbsolutePanelDescription();
+    def cwAbsolutePanelDescription(): String
 
-    String cwAbsolutePanelHelloWorld();
+    def cwAbsolutePanelHelloWorld(): String
 
-    String cwAbsolutePanelItemsToMove();
+    def cwAbsolutePanelItemsToMove(): String
 
-    String cwAbsolutePanelLeft();
+    def cwAbsolutePanelLeft(): String
 
-    String cwAbsolutePanelName();
+    def cwAbsolutePanelName(): String
 
-    String cwAbsolutePanelTop();
+    def cwAbsolutePanelTop(): String
 
-    String[] cwAbsolutePanelWidgetNames();
+    def cwAbsolutePanelWidgetNames(): Array[String]
   }
+}
+
+/**
+ * Example file.
+ */
+class CwAbsolutePanel(constants: CwAbsolutePanel.CwConstants) extends ContentWidget(constants) {
 
   /**
    * The absolute panel used in the example.
    */
-  private AbsolutePanel absolutePanel = null;
-
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private CwConstants constants;
+  private var absolutePanel: AbsolutePanel = null;
 
   /**
    * The input field used to set the left position of a {@link Widget}.
    */
   @ShowcaseData
-  private TextBox leftPosBox = null;
+  private var leftPosBox: TextBox  = null;
 
   /**
    * The list box of items that can be repositioned.
    */
   @ShowcaseData
-  private ListBox listBox = new ListBox();
+  private val listBox = new ListBox();
 
   /**
    * The input field used to set the top position of a {@link Widget}.
    */
   @ShowcaseData
-  private TextBox topPosBox = null;
+  private var topPosBox: TextBox = null;
 
   /**
    * A mapping between the name of a {@link Widget} and the widget in the
    * {@link AbsolutePanel}.
    */
   @ShowcaseData
-  private Map<String, Widget> widgetMap = null;
+  private var widgetMap: Map[String, Widget] = null;
 
-  /**
-   * Constructor.
-   * 
-   * @param constants the constants
-   */
-  public CwAbsolutePanel(CwConstants constants) {
-    super(constants);
-    this.constants = constants;
-  }
+  override def getDescription() = constants.cwAbsolutePanelDescription
 
-  @Override
-  public String getDescription() {
-    return constants.cwAbsolutePanelDescription();
-  }
+  override def getName() = constants.cwAbsolutePanelName
 
-  @Override
-  public String getName() {
-    return constants.cwAbsolutePanelName();
-  }
-
-  @Override
-  public boolean hasStyle() {
-    return false;
-  }
+  override def hasStyle() = false
 
   /**
    * Initialize this example.
    */
   @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
+  override def onInitialize(): Widget = {
     // Create a new panel
-    widgetMap = new LinkedHashMap<String, Widget>();
+    widgetMap = new LinkedHashMap[String, Widget]();
     absolutePanel = new AbsolutePanel();
     absolutePanel.setSize("250px", "250px");
     absolutePanel.ensureDebugId("cwAbsolutePanel");
 
     // Add an HTML widget to the panel
-    String[] widgetNames = constants.cwAbsolutePanelWidgetNames();
-    HTML text = new HTML(constants.cwAbsolutePanelHelloWorld());
+    val widgetNames = constants.cwAbsolutePanelWidgetNames;
+    val text = new HTML(constants.cwAbsolutePanelHelloWorld);
     absolutePanel.add(text, 10, 20);
-    widgetMap.put(widgetNames[0], text);
+    widgetMap.put(widgetNames(0), text);
 
     // Add a Button to the panel
-    Button button = new Button(constants.cwAbsolutePanelClickMe());
+    val button = new Button(constants.cwAbsolutePanelClickMe);
     absolutePanel.add(button, 80, 45);
-    widgetMap.put(widgetNames[1], button);
+    widgetMap.put(widgetNames(1), button);
 
     // Add a Button to the panel
-    Grid grid = new Grid(2, 3);
+    val grid = new Grid(2, 3);
     grid.setBorderWidth(1);
-    for (int i = 0; i < 3; i++) {
+    for (i <- 0 until 3) {
       grid.setHTML(0, i, i + "");
-      grid.setWidget(1, i, new Image(Showcase.images().gwtLogoThumb()));
+      grid.setWidget(1, i, new Image(Showcase.images.gwtLogoThumb()));
     }
     absolutePanel.add(grid, 60, 100);
-    widgetMap.put(widgetNames[2], grid);
+    widgetMap.put(widgetNames(2), grid);
 
     // Wrap the absolute panel in a DecoratorPanel
-    DecoratorPanel absolutePanelWrapper = new DecoratorPanel();
+    val absolutePanelWrapper = new DecoratorPanel();
     absolutePanelWrapper.setWidget(absolutePanel);
 
     // Create the options bar
-    DecoratorPanel optionsWrapper = new DecoratorPanel();
+    val optionsWrapper = new DecoratorPanel();
     optionsWrapper.setWidget(createOptionsBar());
 
     // Add the components to a panel and return it
-    HorizontalPanel mainLayout = new HorizontalPanel();
+    val mainLayout = new HorizontalPanel();
     mainLayout.setSpacing(10);
     mainLayout.add(optionsWrapper);
     mainLayout.add(absolutePanelWrapper);
@@ -186,27 +163,20 @@ public class CwAbsolutePanel extends ContentWidget {
    * attached to the page.
    */
   @ShowcaseSource
-  @Override
-  public void onInitializeComplete() {
+  override def onInitializeComplete() {
     DeferredCommand.addCommand(new Command() {
-      public void execute() {
+      def execute() {
         updateSelectedItem();
       }
     });
   }
 
-  @Override
-  public void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+  override def asyncOnInitialize(callback: AsyncCallback[Widget]) {
     GWT.runAsync(new RunAsyncCallback() {
+      def onFailure(caught: Throwable) = callback.onFailure(caught)
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
-
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
+      def onSuccess() = callback.onSuccess(onInitialize())
+    })
   }
 
   /**
@@ -216,16 +186,15 @@ public class CwAbsolutePanel extends ContentWidget {
    * @return the new options panel
    */
   @ShowcaseSource
-  private Widget createOptionsBar() {
+  private def createOptionsBar(): Widget = {
     // Create a panel to move components around
-    FlexTable optionsBar = new FlexTable();
+    val optionsBar = new FlexTable();
     topPosBox = new TextBox();
     topPosBox.setWidth("3em");
     topPosBox.setText("100");
     leftPosBox = new TextBox();
     leftPosBox.setWidth("3em");
     leftPosBox.setText("60");
-    listBox = new ListBox();
     optionsBar.setHTML(0, 0, constants.cwAbsolutePanelItemsToMove());
     optionsBar.setWidget(0, 1, listBox);
     optionsBar.setHTML(1, 0, constants.cwAbsolutePanelTop());
@@ -234,20 +203,20 @@ public class CwAbsolutePanel extends ContentWidget {
     optionsBar.setWidget(2, 1, leftPosBox);
 
     // Add the widgets to the list box
-    for (String name : widgetMap.keySet()) {
+    for (name <- widgetMap.keys) {
       listBox.addItem(name);
     }
 
     // Set the current item position when the user selects an item
     listBox.addChangeHandler(new ChangeHandler() {
-      public void onChange(ChangeEvent event) {
+      def onChange(event: ChangeEvent) {
         updateSelectedItem();
       }
     });
 
     // Move the item as the user changes the value in the left and top boxes
-    KeyUpHandler repositionHandler = new KeyUpHandler() {
-      public void onKeyUp(KeyUpEvent event) {
+    val repositionHandler = new KeyUpHandler() {
+      def onKeyUp(event: KeyUpEvent) {
         repositionItem();
       }
     };
@@ -263,19 +232,18 @@ public class CwAbsolutePanel extends ContentWidget {
    * position text boxes.
    */
   @ShowcaseSource
-  private void repositionItem() {
+  private def repositionItem() {
     // Get the selected item to move
-    String name = listBox.getValue(listBox.getSelectedIndex());
-    Widget item = widgetMap.get(name);
+    val name = listBox.getValue(listBox.getSelectedIndex);
+    val item = widgetMap.get(name).get;
 
     // Reposition the item
     try {
-      int top = Integer.parseInt(topPosBox.getText());
-      int left = Integer.parseInt(leftPosBox.getText());
+      val top = Integer.parseInt(topPosBox.getText);
+      val left = Integer.parseInt(leftPosBox.getText);
       absolutePanel.setWidgetPosition(item, left, top);
-    } catch (NumberFormatException e) {
-      // Ignore invalid user input
-      return;
+    } catch {
+      case e: NumberFormatException => // Ignore invalid user input
     }
   }
 
@@ -284,9 +252,9 @@ public class CwAbsolutePanel extends ContentWidget {
    * item to move.
    */
   @ShowcaseSource
-  private void updateSelectedItem() {
-    String name = listBox.getValue(listBox.getSelectedIndex());
-    Widget item = widgetMap.get(name);
+  private def updateSelectedItem() {
+    val name = listBox.getValue(listBox.getSelectedIndex);
+    val item = widgetMap.get(name).get
     topPosBox.setText(absolutePanel.getWidgetTop(item) + "");
     leftPosBox.setText(absolutePanel.getWidgetLeft(item) + "");
   }

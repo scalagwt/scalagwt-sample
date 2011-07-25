@@ -2,7 +2,8 @@
 <project name="Hello" default="build" basedir=".">
   <!-- Arguments -style PRETTY or -logLevel DEBUG to gwtc and devmode targets -->
   <property name="gwt.args" value="-draftCompile -ea -style pretty -logLevel TRACE" />
-  
+  <property name="scala.args" value="-no-specialization -g:notailcalls"/>
+
   <path id="scala.class.path">
     <fileset dir="lib/scala" includes="*.jar"/>
   </path>
@@ -42,11 +43,11 @@
   <target name="scalac" description="Scalac compile to jribble">
     <mkdir dir="war/WEB-INF/jribble"/>
     <!-- srcdir should really be 'src', but we can't compile both samples to jribble yet -->
-    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/jribble" target="jribble" addparams="-no-specialization -g:notailcalls">
+    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
       <classpath refid="project.class.path"/>
     </scalac>
     <mkdir dir="war/WEB-INF/classes"/>
-    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/classes" addparams="-no-specialization -g:notailcalls">
+    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/classes" addparams="${scala.args}">
       <classpath refid="project.class.path"/>
     </scalac>
     <javac srcdir="src" destdir="war/WEB-INF/classes">
@@ -65,7 +66,7 @@
   <!-- temporary target to try compiling the showcase sample to jribble -->
   <target name="scalac-jribble" description="Scalac compile showcase to jribble">
     <mkdir dir="war/WEB-INF/jribble"/>
-    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/jribble" target="jribble">
+    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
       <classpath refid="project.class.path"/>
     </scalac>
   </target>

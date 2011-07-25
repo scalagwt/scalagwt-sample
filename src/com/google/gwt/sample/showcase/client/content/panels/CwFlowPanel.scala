@@ -27,63 +27,42 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * Example file.
- */
-@ShowcaseStyle(".cw-FlowPanel-checkBox")
-public class CwFlowPanel extends ContentWidget {
+object CwFlowPanel {
   /**
    * The constants used in this Content Widget.
    */
   @ShowcaseSource
-  public static interface CwConstants extends Constants,
-      ContentWidget.CwConstants {
-    String cwFlowPanelDescription();
+  trait CwConstants extends Constants with ContentWidget.CwConstants {
+    def cwFlowPanelDescription(): String
 
-    String cwFlowPanelItem();
+    def cwFlowPanelItem(): String
 
-    String cwFlowPanelName();
+    def cwFlowPanelName(): String
   }
+}
 
-  /**
-   * An instance of the constants.
-   */
-  @ShowcaseData
-  private CwConstants constants;
+/**
+ * Example file.
+ */
+@ShowcaseStyle(Array(".cw-FlowPanel-checkBox"))
+class CwFlowPanel(constants: CwFlowPanel.CwConstants) extends ContentWidget(constants) {
 
-  /**
-   * Constructor.
-   * 
-   * @param constants the constants
-   */
-  public CwFlowPanel(CwConstants constants) {
-    super(constants);
-    this.constants = constants;
-  }
+  override def getDescription() = constants.cwFlowPanelDescription
 
-  @Override
-  public String getDescription() {
-    return constants.cwFlowPanelDescription();
-  }
-
-  @Override
-  public String getName() {
-    return constants.cwFlowPanelName();
-  }
+  override def getName() = constants.cwFlowPanelName
 
   /**
    * Initialize this example.
    */
   @ShowcaseSource
-  @Override
-  public Widget onInitialize() {
+  override def onInitialize(): Widget = {
     // Create a Flow Panel
-    FlowPanel flowPanel = new FlowPanel();
+    val flowPanel = new FlowPanel();
     flowPanel.ensureDebugId("cwFlowPanel");
 
     // Add some content to the panel
-    for (int i = 0; i < 30; i++) {
-      CheckBox checkbox = new CheckBox(constants.cwFlowPanelItem() + " " + i);
+    for (i <- 0 until 30) {
+      val checkbox = new CheckBox(constants.cwFlowPanelItem + " " + i);
       checkbox.addStyleName("cw-FlowPanel-checkBox");
       flowPanel.add(checkbox);
     }
@@ -92,17 +71,11 @@ public class CwFlowPanel extends ContentWidget {
     return flowPanel;
   }
 
-  @Override
-  public void asyncOnInitialize(final AsyncCallback<Widget> callback) {
+  override def asyncOnInitialize(callback: AsyncCallback[Widget]) = {
     GWT.runAsync(new RunAsyncCallback() {
+      def onFailure(caught: Throwable) = callback.onFailure(caught)
 
-      public void onFailure(Throwable caught) {
-        callback.onFailure(caught);
-      }
-
-      public void onSuccess() {
-        callback.onSuccess(onInitialize());
-      }
-    });
+      def onSuccess() = callback.onSuccess(onInitialize())
+    })
   }
 }

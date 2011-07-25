@@ -7,8 +7,6 @@
 /war/WEB-INF/showcase
 /bin
 .scala_dependencies
-.project
 .settings/
-.classpath
 jribbleCache
 gwt-unitCache
