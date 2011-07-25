@@ -189,10 +189,10 @@ class CwStackPanel(@ShowcaseData private val constants: CwStackPanel.CwConstants
       val (contactName, contactEmail) = pair
       val contactLink: HTML =
         new HTML("""<a href="javascript:undefined;">""" + contactName + "</a>")
-        contactsPanel.add(contactLink)
+      contactsPanel.add(contactLink)
 
-        // Open the contact info popup when the user clicks a contact
-        contactLink.addClickHandler { event: ClickEvent =>
+      // Open the contact info popup when the user clicks a contact
+      contactLink addClickHandler {
         // Set the info about the contact
         contactInfo.setHTML(contactName + "<br><i>" + contactEmail + "</i>")
 
