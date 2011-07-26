@@ -58,7 +58,7 @@ object CwPluralFormsExample {
 /**
  * Example file.
  */
-@ShowcaseRaw(Array("PluralMessages.java", "PluralMessages_fr.properties"))
+@ShowcaseRaw(Array("PluralMessages.scala", "PluralMessages_fr.properties"))
 class CwPluralFormsExample(constants: CwPluralFormsExample.CwConstants) extends ContentWidget(constants) {
 
   /**
@@ -164,12 +164,12 @@ class CwPluralFormsExample(constants: CwPluralFormsExample.CwConstants) extends 
 
     val tabIndex = event.getSelectedItem.intValue
     if (!javaLoaded && tabIndex == 2) {
-      // Load PluralMessages.java
+      // Load PluralMessages.scala
       javaLoaded = true
       var className = classOf[PluralMessages].getName
       className = className.substring(className.lastIndexOf(".") + 1)
       requestSourceContents(ShowcaseConstants.DST_SOURCE_RAW + className
-          + ".java.html", javaWidget, null)
+          + ".scala.html", javaWidget, null)
     } else if (!propertiesLoaded && tabIndex == 3) {
       // Load ErrorMessages.properties
       propertiesLoaded = true
@@ -194,7 +194,7 @@ class CwPluralFormsExample(constants: CwPluralFormsExample.CwConstants) extends 
   private def addMessagesTab() {
     // Add a tab to show the interface
     javaWidget = new HTML()
-    add(javaWidget, "PluralMessages.java")
+    add(javaWidget, "PluralMessages.scala")
 
     // Add a tab to show the properties
     propertiesWidget = new HTML()
