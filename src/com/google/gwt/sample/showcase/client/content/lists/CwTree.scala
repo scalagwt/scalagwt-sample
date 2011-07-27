@@ -181,7 +181,7 @@ class CwTree(@ShowcaseData private val constants: CwTree.CwConstants)
     }
 
     // Add a handler that automatically generates some children
-    dynamicTree.addOpenHandler { event: OpenEvent[TreeItem] =>
+    dynamicTree onOpen { event =>
       val item = event.getTarget
       if (item.getChildCount == 1) {
         // Close the item immediately

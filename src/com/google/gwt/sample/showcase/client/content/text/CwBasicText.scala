@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent
 import com.google.gwt.event.dom.client.KeyUpHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseStyle
@@ -141,18 +142,10 @@ class CwBasicText(constants: CwBasicText.CwConstants) extends ContentWidget(cons
       val label = new Label(constants.cwBasicTextSelected() + ": 0, 0")
 
       // Add a KeyUpHandler
-      textBox.addKeyUpHandler(new KeyUpHandler() {
-        def onKeyUp(event: KeyUpEvent) = {
-          updateSelectionLabel(textBox, label)
-        }
-      })
+      textBox onKeyUp { _ => updateSelectionLabel(textBox, label) }
 
       // Add a ClickHandler
-      textBox.addClickHandler(new ClickHandler() {
-        def onClick(event: ClickEvent) = {
-          updateSelectionLabel(textBox, label)
-        }
-      })
+      textBox onClick { _ => updateSelectionLabel(textBox, label) }
 
       // Add the label to the box
       hPanel.add(label)

@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.i18n.client.Constants.DefaultStringValue
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.Showcase
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
@@ -245,17 +246,13 @@ class CwAnimation(constants: CwAnimation.CwConstants) extends ContentWidget(cons
     // Add start button
     startButton = new Button(constants.cwAnimationStart)
     startButton.addStyleName("sc-FixedWidthButton")
-    startButton.addClickHandler(new ClickHandler() {
-      def onClick(event:ClickEvent) = animation.run(2000)
-    })
+    startButton onClick { _ => animation.run(2000) }
     optionsBar.add(startButton)
 
     // Add cancel button
     cancelButton = new Button(constants.cwAnimationCancel)
     cancelButton.addStyleName("sc-FixedWidthButton")
-    cancelButton.addClickHandler(new ClickHandler() {
-      def onClick(event: ClickEvent) = animation.cancel()
-    })
+    cancelButton onClick { _ => animation.cancel() }
     optionsBar.add(cancelButton)
 
     // Return the options bar

@@ -183,7 +183,7 @@ class Showcase extends EntryPoint {
       setupMainMenu(constants)
 
       // Setup a history handler to reselect the associate menu item
-      History.addValueChangeHandler { event: ValueChangeEvent[String] =>
+      History addValueChangeHandler { event: ValueChangeEvent[String] =>
          var item: TreeItem = itemTokens.get(event.getValue)
          if (item == null) {
             item = app.getMainMenu.getItem(0).getChild(0)
@@ -194,7 +194,7 @@ class Showcase extends EntryPoint {
       }
 
       // Add a handler that sets the content widget when a menu item is selected
-      app.addSelectionHandler { event: SelectionEvent[TreeItem] =>
+      app onSelection { event =>
          var item = event.getSelectedItem
          var content: ContentWidget = itemWidgets.get(item)
          if (content != null && !content.equals(app.getContent)) {
@@ -381,7 +381,7 @@ class Showcase extends EntryPoint {
             }
          }
       }
-      localeBox.addChangeHandler { event: ChangeEvent =>
+      localeBox onChange { _ =>
          val localeName = localeBox.getValue(localeBox.getSelectedIndex)
          val builder = Location.createUrlBuilder.setParameter("locale", localeName)
          Window.Location.replace(builder.buildString)
@@ -398,7 +398,7 @@ class Showcase extends EntryPoint {
       ShowcaseConstants.STYLE_THEMES foreach { theme =>
          val button: ThemeButton = new ThemeButton(theme)
          styleWrapper.add(button)
-         button.addClickHandler { event: ClickEvent =>
+         button onClick { _ =>
             // Update the current theme
             CUR_THEME = button.theme
 

@@ -24,6 +24,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent
 import com.google.gwt.event.dom.client.KeyDownHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
 import com.google.gwt.user.client.rpc.AsyncCallback
@@ -80,18 +81,14 @@ class CwFrame(constants: CwFrame.CwConstants) extends ContentWidget(constants) {
     optionsPanel.add(setLocationButton)
 
     // Change the location when the user clicks the button
-    setLocationButton.addClickHandler(new ClickHandler() {
-      def onClick(event: ClickEvent) = frame.setUrl(locationBox.getText)
-    })
+    setLocationButton onClick { _ => frame.setUrl(locationBox.getText) }
 
     // Change the location when the user presses enter
-    locationBox.addKeyDownHandler(new KeyDownHandler() {
-      def onKeyDown(event: KeyDownEvent) {
-        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-          frame.setUrl(locationBox.getText)
-        }
+    locationBox onKeyDown { event =>
+      if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+        frame.setUrl(locationBox.getText)
       }
-    })
+    }
 
     // Add everything to a panel and return it
     val vPanel = new VerticalPanel()

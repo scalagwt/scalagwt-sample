@@ -22,6 +22,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.i18n.client.DateTimeFormat
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseStyle
@@ -71,13 +72,11 @@ class CwDatePicker(constants: CwDatePicker.CwConstants) extends ContentWidget(co
     val text = new Label()
 
     // Set the value in the text box when the user selects a date
-    datePicker.addValueChangeHandler(new ValueChangeHandler[Date]() {
-      def onValueChange(event: ValueChangeEvent[Date]) {
-        val date = event.getValue()
-        val dateString = DateTimeFormat.getMediumDateFormat().format(date)
-        text.setText(dateString)
-      }
-    })
+    datePicker onValueChange { event =>
+      val date = event.getValue()
+      val dateString = DateTimeFormat.getMediumDateFormat().format(date)
+      text.setText(dateString)
+    }
 
     // Set the default value
     datePicker.setValue(new Date(), true)
