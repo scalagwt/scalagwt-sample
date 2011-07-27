@@ -108,7 +108,9 @@
 }
 .sc-ContentWidget pre {
   border: 1px solid #888;
-  background: #eeeeee;
+  background: white;
+  font: 12px 'Bitstream Vera Sans Mono','Courier',monospace;
+  line-height: 1.4;
   padding: 10px 2px;
   margin: 10px 0px;
 }
