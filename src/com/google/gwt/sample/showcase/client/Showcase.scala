@@ -443,7 +443,7 @@ class Showcase extends EntryPoint {
 
       // Find existing style sheets that need to be removed
       var styleSheetsFound = false
-      val headElem: HeadElement = StyleSheetLoader.getHeadElement
+      val headElem: HeadElement = DomUtil.getHeadElement
       var toRemove: List[Element] = Nil
       /* TODO compare to GWT trunk
       val children: NodeList[Node] = headElem.getChildNodes
