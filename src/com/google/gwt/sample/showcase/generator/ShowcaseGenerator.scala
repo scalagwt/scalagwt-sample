@@ -216,7 +216,7 @@ class ShowcaseGenerator extends Generator {
     formattedSource = formattedSource.replace("<", "&lt;")
     formattedSource = formattedSource.replace(">", "&gt;")
     formattedSource = formattedSource.replace("* \n   */\n", "*/\n")
-    formattedSource = "<pre>" + formattedSource + "</pre>"
+    formattedSource = """<pre class="prettyprint">""" + formattedSource + "</pre>"
 
     // Save the source code to a file
     val dstPath = ShowcaseConstants.DST_SOURCE_EXAMPLE +

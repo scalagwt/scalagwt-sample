@@ -328,6 +328,7 @@ abstract class ContentWidget(constants: ContentWidget.CwConstants) extends LazyP
 
       def onResponseReceived(request: Request, response: Response) {
         target.setHTML(response.getText())
+        Prettify.prettyPrint()
         if (callback != null) {
           callback.onResponseReceived(request, response)
         }
