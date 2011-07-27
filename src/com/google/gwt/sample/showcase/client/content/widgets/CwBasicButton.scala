@@ -21,6 +21,7 @@ import com.google.gwt.event.dom.client.ClickEvent
 import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
+import com.google.gwt.sample.showcase.client.Handlers._
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseStyle
@@ -70,9 +71,7 @@ class CwBasicButton(constants: CwBasicButton.CwConstants) extends ContentWidget(
     // Add a normal button
     val normalButton = new Button(
         constants.cwBasicButtonNormal,
-        new ClickHandler() {
-          def onClick(event: ClickEvent) = Window.alert(constants.cwBasicButtonClickMessage)
-        })
+        (_: ClickEvent) => Window.alert(constants.cwBasicButtonClickMessage))
     normalButton.ensureDebugId("cwBasicButton-normal")
     hPanel.add(normalButton)
 
