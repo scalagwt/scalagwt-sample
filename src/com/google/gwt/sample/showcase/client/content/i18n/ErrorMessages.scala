@@ -13,14 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.gwt.sample.showcase.client.content.i18n;
+package com.google.gwt.sample.showcase.client.content.i18n
 
-import com.google.gwt.i18n.client.Messages;
+import com.google.gwt.i18n.client.Messages
 
 /**
  * Internationalized messages.
  */
-public interface ErrorMessages extends Messages {
-  String permissionDenied(String username, String securityClearance,
-      String inaccessibleResource);
+trait ErrorMessages extends Messages {
+  def permissionDenied(username: String, securityClearance: String, inaccessibleResource: String): String
 }

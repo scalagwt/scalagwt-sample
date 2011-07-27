@@ -55,7 +55,7 @@ object CwConstantsExample {
 /**
  * Example file.
  */
-@ShowcaseRaw(Array("ExampleConstants.java", "ExampleConstants.properties"))
+@ShowcaseRaw(Array("ExampleConstants.scala", "ExampleConstants.properties"))
 class CwConstantsExample(constants: CwConstantsExample.CwConstants) extends ContentWidget(constants) {
 
   /**
@@ -147,12 +147,12 @@ class CwConstantsExample(constants: CwConstantsExample.CwConstants) extends Cont
 
     val tabIndex = event.getSelectedItem().intValue()
     if (!javaLoaded && tabIndex == 2) {
-      // Load ErrorMessages.java
+      // Load ErrorMessages.scala
       javaLoaded = true
       var className = classOf[ExampleConstants].getName()
       className = className.substring(className.lastIndexOf(".") + 1)
       requestSourceContents(ShowcaseConstants.DST_SOURCE_RAW + className
-          + ".java.html", javaWidget, null)
+          + ".scala.html", javaWidget, null)
     } else if (!propertiesLoaded && tabIndex == 3) {
       // Load ErrorMessages.properties
       propertiesLoaded = true
@@ -177,7 +177,7 @@ class CwConstantsExample(constants: CwConstantsExample.CwConstants) extends Cont
   private def addConstantsTab() {
     // Add a tab to show the interface
     javaWidget = new HTML()
-    add(javaWidget, "ExampleConstants.java")
+    add(javaWidget, "ExampleConstants.scala")
 
     // Add a tab to show the properties
     propertiesWidget = new HTML()
