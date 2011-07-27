@@ -63,7 +63,7 @@ object CwMessagesExample {
 /**
  * Example file.
  */
-@ShowcaseRaw(Array("ErrorMessages.java", "ErrorMessages.properties"))
+@ShowcaseRaw(Array("ErrorMessages.scala", "ErrorMessages.properties"))
 class CwMessagesExample(constants: CwMessagesExample.CwConstants) extends ContentWidget(constants) {
 
   /**
@@ -200,12 +200,12 @@ class CwMessagesExample(constants: CwMessagesExample.CwConstants) extends Conten
 
     val tabIndex = event.getSelectedItem.intValue
     if (!javaLoaded && tabIndex == 2) {
-      // Load ErrorMessages.java
+      // Load ErrorMessages.scala
       javaLoaded = true
       var className = classOf[ErrorMessages].getName
       className = className.substring(className.lastIndexOf(".") + 1)
       requestSourceContents(ShowcaseConstants.DST_SOURCE_RAW + className
-          + ".java.html", javaWidget, null)
+          + ".scala.html", javaWidget, null)
     } else if (!propertiesLoaded && tabIndex == 3) {
       // Load ErrorMessages.properties
       propertiesLoaded = true
@@ -230,7 +230,7 @@ class CwMessagesExample(constants: CwMessagesExample.CwConstants) extends Conten
   private def addMessagesTab() {
     // Add a tab to show the interface
     javaWidget = new HTML()
-    add(javaWidget, "ErrorMessages.java")
+    add(javaWidget, "ErrorMessages.scala")
 
     // Add a tab to show the properties
     propertiesWidget = new HTML()

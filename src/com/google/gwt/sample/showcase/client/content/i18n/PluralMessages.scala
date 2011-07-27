@@ -13,18 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.gwt.sample.showcase.client.content.i18n;
+package com.google.gwt.sample.showcase.client.content.i18n
 
-import com.google.gwt.i18n.client.Messages;
-import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
+import com.google.gwt.i18n.client.Messages
+import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale
+import com.google.gwt.i18n.client.Messages.{PluralCount, PluralText, DefaultMessage}
 
 /**
  * Internationalized messages used by {@link CwPluralFormsExample}. Used to
  * demonstrate plural forms support.
  */
 @DefaultLocale("en")
-public interface PluralMessages extends Messages {
+trait PluralMessages extends Messages {
   @DefaultMessage("You have {0} trees.")
-  @PluralText({"one", "You have one tree."})
-  String treeCount(@PluralCount int count);
+  @PluralText(Array("one", "You have one tree."))
+  def treeCount(@PluralCount count: Int): String
 }
+

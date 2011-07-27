@@ -62,7 +62,7 @@ object CwConstantsWithLookupExample {
 /**
  * Example file.
  */
-@ShowcaseRaw(Array("ColorConstants.java", "ColorConstants.properties"))
+@ShowcaseRaw(Array("ColorConstants.scala", "ColorConstants.properties"))
 class CwConstantsWithLookupExample(constants: CwConstantsWithLookupExample.CwConstants) extends ContentWidget(constants) {
 
   /**
@@ -168,12 +168,12 @@ class CwConstantsWithLookupExample(constants: CwConstantsWithLookupExample.CwCon
 
     val tabIndex = event.getSelectedItem.intValue
     if (!javaLoaded && tabIndex == 2) {
-      // Load ErrorMessages.java
+      // Load ErrorMessages.scala
       javaLoaded = true
       var className = classOf[ColorConstants].getName()
       className = className.substring(className.lastIndexOf(".") + 1)
       requestSourceContents(ShowcaseConstants.DST_SOURCE_RAW + className
-          + ".java.html", javaWidget, null)
+          + ".scala.html", javaWidget, null)
     } else if (!propertiesLoaded && tabIndex == 3) {
       // Load ErrorMessages.properties
       propertiesLoaded = true
@@ -198,7 +198,7 @@ class CwConstantsWithLookupExample(constants: CwConstantsWithLookupExample.CwCon
   private def addConstantsTab() {
     // Add a tab to show the interface
     javaWidget = new HTML()
-    add(javaWidget, "ColorConstants.java")
+    add(javaWidget, "ColorConstants.scala")
 
     // Add a tab to show the properties
     propertiesWidget = new HTML()
