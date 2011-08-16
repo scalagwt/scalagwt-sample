@@ -119,6 +119,7 @@
   <target name="clean" description="Cleans this project">
     <delete dir="war/WEB-INF/classes" failonerror="false" />
     <delete dir="war/WEB-INF/jribble" failonerror="false" />
+    <delete dir="war/WEB-INF/gwtdlx" failonerror="false" />
     <delete dir="war/hello" failonerror="false" />
     <delete dir="war/showcase" failonerror="false" />
     <delete dir="gwt-unitCache" failonerror="false" />
