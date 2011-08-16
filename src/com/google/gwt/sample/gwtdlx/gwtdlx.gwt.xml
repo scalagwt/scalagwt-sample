@@ -2,5 +2,6 @@
 <module rename-to='gwtdlx'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
+  <inherits name='ScalaLibrary'/>
   <entry-point class='com.google.gwt.sample.gwtdlx.client.GwtDlx'/>
 </module>
