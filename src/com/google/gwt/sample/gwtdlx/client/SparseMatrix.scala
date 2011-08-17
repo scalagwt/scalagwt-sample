@@ -14,10 +14,9 @@
  * the License.
  */
 
-package com.google.gwt.sample.gwtdlx.solver
+package com.google.gwt.sample.gwtdlx.client
 
 import scala.collection.mutable.Map
-import com.google.gwt.sample.gwtdlx.client.Util
 
 /**
   * The matrix from which we'll be picking out columns to solve the set-cover

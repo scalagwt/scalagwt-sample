@@ -17,7 +17,6 @@ package com.google.gwt.sample.gwtdlx.client
  */
 
 import collection.mutable._
-import com.google.gwt.sample.gwtdlx.solver.{Column, Node, SparseMatrix}
 
 class DLX(matrix : SparseMatrix) {
   val header = matrix.header

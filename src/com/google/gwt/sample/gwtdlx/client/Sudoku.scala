@@ -17,7 +17,6 @@ package com.google.gwt.sample.gwtdlx.client
  */
 
 import collection.mutable._
-import com.google.gwt.sample.gwtdlx.solver.SparseMatrix
 
 /**
  * Representation of a Sudoku puzzle, with methods to convert back and forth
