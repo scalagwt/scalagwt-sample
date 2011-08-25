@@ -50,6 +50,23 @@ class GwtDlx extends EntryPoint {
       ajax.setVisible(false)
       ajax.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER)
       noSolution.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER)
+
+      val board = Array(Array(" ", "2", " ",   "1", " ", "9",   "8", "7", " "),
+                        Array(" ", "3", " ",   "5", "8", " ",   "2", "9", "6"),
+                        Array("7", " ", "9",   " ", " ", " ",   "5", "4", " "),
+
+                        Array(" ", "1", " ",   "2", "5", " ",   "4", " ", " "),
+                        Array("3", " ", "2",   " ", " ", " ",   "6", " ", "7"),
+                        Array(" ", " ", "4",   " ", "1", "3",   " ", "5", " "),
+
+                        Array(" ", "9", "3",   " ", " ", " ",   "7", " ", "5"),
+                        Array("5", "4", "6",   " ", "7", "1",   " ", "2", " "),
+                        Array(" ", "7", "8",   "9", " ", "5",   " ", "6", " "))
+      for (r <- 0 until 9) {
+        for (c <- 0 until 9) {
+          getBox(r, c).setValue(board(r)(c))
+        }
+      }
    }
 
    private class FunctionClickHandler(f: => Unit) extends ClickHandler {
