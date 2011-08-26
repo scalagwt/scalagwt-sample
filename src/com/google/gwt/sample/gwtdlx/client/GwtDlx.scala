@@ -15,21 +15,21 @@
  */
 package com.google.gwt.sample.gwtdlx.client
 
-import com.google.gwt.core.client.EntryPoint
-import com.google.gwt.core.client.GWT
 import com.google.gwt.dom.client.Document
 import com.google.gwt.dom.client.InputElement
 import com.google.gwt.event.dom.client.ClickEvent
 import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.user.client.rpc.AsyncCallback
 import com.google.gwt.user.client.ui._
+import com.google.gwt.core.client.{Scheduler, EntryPoint, GWT}
+import com.google.gwt.core.client.Scheduler.ScheduledCommand
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 class GwtDlx extends EntryPoint {
    private val grid: Grid = new Grid(9, 9)
-   private val ajax: Label = new Label("ajax: the cloud is thinking.")
+   private val ajax: Label = new Label("the browser is thinking really hard...")
    private val noSolution: HTML = new HTML("&empty;")
 
    def onModuleLoad: Unit = {
@@ -98,10 +98,13 @@ class GwtDlx extends EntryPoint {
          if (str.length == 1 && Character.isDigit(str(0))) str(0) - '0'
          else 0
       }
-      solve(board)
+     Scheduler.get().scheduleDeferred { () => solve(board) }
    }
 
    private def getBox(r: Int, c: Int): TextBox = grid.getWidget(r, c).asInstanceOf[TextBox]
+
+   implicit private def fn2command(f: () => Unit): ScheduledCommand =
+     new ScheduledCommand { def execute() = f() }
 
    private def solve(board: Array[Array[Int]]) = {
       val result = (new Sudoku(board)).solve
