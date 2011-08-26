@@ -66,9 +66,7 @@ class GwtDlx extends EntryPoint {
                         Array(" ", "7", "8",   "9", " ", "5",   " ", "6", " "))
       for (r <- 0 until 9) {
         for (c <- 0 until 9) {
-          val tb = new TextBox()
-          tb.setMaxLength(1)
-          grid.setWidget(r, c, tb)
+          grid.setWidget(r, c, createCell)
           getBox(r, c).setValue(board(r)(c))
         }
       }
@@ -98,7 +96,14 @@ class GwtDlx extends EntryPoint {
          if (str.length == 1 && Character.isDigit(str(0))) str(0) - '0'
          else 0
       }
-     Scheduler.get().scheduleDeferred { () => solve(board) }
+      Scheduler.get().scheduleDeferred { () => solve(board) }
+   }
+
+   private def createCell: TextBox = {
+     val cell = new TextBox()
+     cell.setMaxLength(1)
+     cell.setStyleName("cell")
+     cell
    }
 
    private def getBox(r: Int, c: Int): TextBox = grid.getWidget(r, c).asInstanceOf[TextBox]
