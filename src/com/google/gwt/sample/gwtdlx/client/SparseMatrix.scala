@@ -38,8 +38,14 @@ class SparseMatrix private (rows : List[List[Int]]) {
   val header = new ColumnHeader()
 
   lazy val occ_rowindices = occupied_rowindices()
+  lazy val rowindices_for = {
+    node_table.keys groupBy { case (r,c) => c } mapValues { _ map { case (r,c) => r } toList }
+  }
 
   lazy val occ_colindices = occupied_colindices()
+  lazy val colindices_for = {
+    node_table.keys groupBy { case (r,c) => r } mapValues { _ map { case (r,c) => c } toList}
+  }
 
 //  initialize();
 
@@ -195,24 +201,6 @@ class SparseMatrix private (rows : List[List[Int]]) {
 
   def occupied_colindices() = occupied_indices(2)
   def occupied_rowindices() = occupied_indices(1)
-
-  /**
-    * Take a given row index and return the list of the columns with nodes
-    * on that row.
-    */
-  def colindices_for(r : Int) = {
-    val all_colindices = occ_colindices
-    all_colindices filter (node_table.contains(r,_))
-  }
-
-  /**
-    * Take a given column index and return the list of the rows with nodes on
-    * that column.
-    */
-  def rowindices_for(c : Int) = {
-    val all_rowindices = occ_rowindices
-    all_rowindices filter (node_table.contains(_,c))
-  }
 
   /**
     * Remove a column; we can put it back in later.
