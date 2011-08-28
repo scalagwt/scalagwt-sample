@@ -16,27 +16,35 @@
 
 package com.google.gwt.sample.gwtdlx.client
 
+import Scheduled._
 import scala.collection.mutable.Map
 
 /**
   * The matrix from which we'll be picking out columns to solve the set-cover
   * problem, for DLX.
   */
-class SparseMatrix (rows : List[List[Int]]) {
+object SparseMatrix {
+  def apply(rows: List[List[Int]]): SparseMatrix @schedulable = {
+    val m = new SparseMatrix(rows)
+    m.initialize()
+    m
+  }
+}
+class SparseMatrix private (rows : List[List[Int]]) {
 
   val column_table = Map.empty[Int, Column]
   val node_table = Map.empty[(Int,Int), Node]
   var columns : List[Column] = List()
   val header = new ColumnHeader()
 
-  initialize();
+//  initialize();
 
-  def initialize() {
+  def initialize(): Unit @schedulable = {
     val myrows = Util.make2DArray(rows)
+    yieldc
 
     for (r <- Util.xrange(myrows.length)) {
       for (c <- Util.xrange(myrows(0).length)) {
-
         if (myrows(r)(c) == 1) {
           val one = new Node(r, c)
           node_table.put((r,c), one)
@@ -44,8 +52,11 @@ class SparseMatrix (rows : List[List[Int]]) {
       }
     }
 
+    yieldc
     build_columns()
+    yieldc
     link_columns()
+    yieldc
     link_nodes()
   }
 

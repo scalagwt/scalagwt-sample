@@ -114,7 +114,7 @@ class GwtDlx extends EntryPoint {
    private def solve(board: Array[Array[Int]]) = {
       import Scheduled._
       sched {
-         val result = (new Sudoku(board)).solve
+         val result = (Sudoku(board)).solve
          ajax.setVisible(false)
          result match {
             case None => noSolution.setVisible(true)

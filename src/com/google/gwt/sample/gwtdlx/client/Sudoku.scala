@@ -23,10 +23,15 @@ import Scheduled._
  * Representation of a Sudoku puzzle, with methods to convert back and forth
  * from an instance of DLX.
  */
-class Sudoku(squares : Array[Array[Int]]) {
-  val dlxrows = SudokuUtil.squaresToDlxRows(squares)
-  val sparseMatrix = new SparseMatrix(dlxrows) 
-  val dlx = new DLX(sparseMatrix)
+object Sudoku {
+  def apply(squares: Array[Array[Int]]): Sudoku @schedulable = {
+    val dlxrows = SudokuUtil.squaresToDlxRows(squares)
+    val sparseMatrix = SparseMatrix(dlxrows)
+    val dlx = new DLX(sparseMatrix)
+    new Sudoku(dlxrows, sparseMatrix, dlx)
+  }
+}
+class Sudoku private (val dlxrows: List[List[Int]], val sparseMatrix: SparseMatrix, val dlx: DLX) {
 
   /**
    * Solve the sudoku puzzle. Return value is a nested list in the same format
