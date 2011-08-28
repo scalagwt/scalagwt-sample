@@ -37,6 +37,10 @@ class SparseMatrix private (rows : List[List[Int]]) {
   var columns : List[Column] = List()
   val header = new ColumnHeader()
 
+  lazy val occ_rowindices = occupied_rowindices()
+
+  lazy val occ_colindices = occupied_colindices()
+
 //  initialize();
 
   def initialize(): Unit @schedulable = {
@@ -109,7 +113,7 @@ class SparseMatrix private (rows : List[List[Int]]) {
     * For each row, make the circular linked-list of those nodes.
     */
   def link_nodes_in_rows() {
-    val rowindices = occupied_rowindices()
+    val rowindices = occ_rowindices
 
     for (r <- rowindices) {
       var colindices = colindices_for(r)
@@ -139,7 +143,7 @@ class SparseMatrix private (rows : List[List[Int]]) {
     * column header objects in the loop.
     */
   def link_nodes_in_columns() {
-    val colindices = occupied_colindices()
+    val colindices = occ_colindices
 
     var prev:Node = null
     var first:Node = null
@@ -197,7 +201,7 @@ class SparseMatrix private (rows : List[List[Int]]) {
     * on that row.
     */
   def colindices_for(r : Int) = {
-    val all_colindices = occupied_colindices()
+    val all_colindices = occ_colindices
     all_colindices filter (node_table.contains(r,_))
   }
 
@@ -206,7 +210,7 @@ class SparseMatrix private (rows : List[List[Int]]) {
     * that column.
     */
   def rowindices_for(c : Int) = {
-    val all_rowindices = occupied_rowindices()
+    val all_rowindices = occ_rowindices
     all_rowindices filter (node_table.contains(_,c))
   }
 
