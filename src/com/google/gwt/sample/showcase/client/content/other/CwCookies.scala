@@ -24,7 +24,6 @@ import com.google.gwt.event.dom.client.ClickHandler
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
 import com.google.gwt.sample.showcase.client.Handlers._
-import com.google.gwt.sample.showcase.client.JavaConversions._
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
 import com.google.gwt.user.client.Command
@@ -40,6 +39,8 @@ import com.google.gwt.user.client.ui.Widget
 
 import java.util.Collection
 import java.util.Date
+
+import scala.collection.JavaConversions._
 
 object CwCookies {
   /**

@@ -2,10 +2,13 @@
 <project name="Hello" default="build" basedir=".">
   <!-- Arguments -style PRETTY or -logLevel DEBUG to gwtc and devmode targets -->
   <property name="gwt.args" value="-draftCompile -ea -style pretty -logLevel TRACE" />
-  <property name="scala.args" value="-no-specialization -g:notailcalls"/>
+  <property name="scala.args" value="-g:notailcalls -Xplugin:${basedir}/lib/scala/factorymanifests.jar"/>
 
   <path id="scala.class.path">
-    <fileset dir="lib/scala" includes="*.jar"/>
+    <fileset dir="lib/scala">
+      <include name="scala-compiler.jar"/>
+      <include name="scala-library.jar"/>
+    </fileset>
   </path>
 
   <path id="project.class.path">
@@ -15,6 +18,11 @@
     <!-- Add any additional non-server libs (such as JUnit) -->
     <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
     <path refid="scala.class.path"/>
+  </path>
+  
+  <path id="project.class.path.library-gwt">
+    <pathelement location="lib/scala/scala-library-gwt.jar"/>
+    <path refid="project.class.path"/>
   </path>
 
   <target name="libs" description="Copy libs to WEB-INF/lib">
@@ -32,6 +40,7 @@
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx512M"/>
       <jvmarg value="-Dx.gwt.astBuilder=true"/>
+      <jvmarg value="-Dgwt.scalalibrary.path=${basedir}/lib/scala/scala-library-gwt.jar"/>
       <arg line="${gwt.args}"/>
       <arg value="com.google.gwt.sample.jribble.Hello"/>
       <arg value="com.google.gwt.sample.showcase.Showcase"/>
@@ -42,17 +51,32 @@
 
   <target name="scalac" description="Scalac compile to jribble">
     <mkdir dir="war/WEB-INF/jribble"/>
-    <!-- srcdir should really be 'src', but we can't compile both samples to jribble yet -->
-    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
-      <classpath refid="project.class.path"/>
+    <!-- TODO(grek): We should have a proper javabootclasspath here -->
+    <scalac srcdir="src" destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
+      <include name="**/*.scala"/>
+      <include name="**/*.java"/>
+      <exclude name="**/generator/*.scala"/>
+      <classpath refid="project.class.path.library-gwt"/>
     </scalac>
     <mkdir dir="war/WEB-INF/classes"/>
-    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/classes" addparams="${scala.args}">
-      <classpath refid="project.class.path"/>
+    <!-- TODO(grek): We should have a proper javabootclasspath here -->
+    <scalac srcdir="src" destdir="war/WEB-INF/classes" addparams="${scala.args}">
+      <include name="**/*.scala"/>
+      <include name="**/*.java"/>
+      <exclude name="**/generator/*.scala"/>
+      <classpath refid="project.class.path.library-gwt"/>
     </scalac>
     <javac srcdir="src" destdir="war/WEB-INF/classes">
-      <classpath refid="project.class.path"/>
+      <classpath refid="project.class.path.library-gwt"/>
     </javac>
+    <scalac srcdir="src" destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
+      <include name="**/generator/*.scala"/>
+      <classpath refid="project.class.path"/>
+    </scalac>
+    <scalac srcdir="src" destdir="war/WEB-INF/classes" addparams="${scala.args}">
+      <include name="**/generator/*.scala"/>
+      <classpath refid="project.class.path"/>
+    </scalac>
   </target>
 
   <!-- temporary target to compile the showcase sample to jvm bytecode until jribble can be used -->

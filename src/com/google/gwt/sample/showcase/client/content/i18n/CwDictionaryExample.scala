@@ -19,8 +19,8 @@ import com.google.gwt.core.client.GWT
 import com.google.gwt.core.client.RunAsyncCallback
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.i18n.client.Dictionary
+import com.google.gwt.sample.showcase.client.GWTConversions._
 import com.google.gwt.sample.showcase.client.ContentWidget
-import com.google.gwt.sample.showcase.client.JavaConversions._
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseSource
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseStyle
@@ -29,6 +29,8 @@ import com.google.gwt.user.client.ui.FlexTable
 import com.google.gwt.user.client.ui.HTML
 import com.google.gwt.user.client.ui.VerticalPanel
 import com.google.gwt.user.client.ui.Widget
+
+import scala.collection.JavaConversions._
 
 object CwDictionaryExample {
   /**
@@ -76,13 +78,10 @@ class CwDictionaryExample(constants: CwDictionaryExample.CwConstants) extends Co
     val userInfoGrid = new FlexTable()
     val userInfo = Dictionary.getDictionary("userInfo")
     var columnCount = 0
-    for (key <- userInfo.keySet) {
-      // Get the value from the set
-      val value = userInfo.get(key)
-
+    for ((k, v) <- userInfo) {
       // Add a column with the data
-      userInfoGrid.setHTML(0, columnCount, key)
-      userInfoGrid.setHTML(1, columnCount, value)
+      userInfoGrid.setHTML(0, columnCount, k)
+      userInfoGrid.setHTML(1, columnCount, v)
 
       // Go to the next column
       columnCount += 1

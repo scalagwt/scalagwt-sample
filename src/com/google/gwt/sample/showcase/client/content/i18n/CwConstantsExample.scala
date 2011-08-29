@@ -23,7 +23,6 @@ import com.google.gwt.event.logical.shared.SelectionEvent
 import com.google.gwt.i18n.client.Constants
 import com.google.gwt.sample.showcase.client.ContentWidget
 import com.google.gwt.sample.showcase.client.Handlers._
-import com.google.gwt.sample.showcase.client.JavaConversions._
 import com.google.gwt.sample.showcase.client.ShowcaseConstants
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseData
 import com.google.gwt.sample.showcase.client.ShowcaseAnnotations.ShowcaseRaw
@@ -37,6 +36,8 @@ import com.google.gwt.user.client.ui.TextBox
 import com.google.gwt.user.client.ui.Widget
 
 import java.util.Map
+
+import scala.collection.JavaConversions._
 
 object CwConstantsExample {
   /**
@@ -126,11 +127,8 @@ class CwConstantsExample(constants: CwConstantsExample.CwConstants) extends Cont
     // Create a list box of favorite colors
     val colorBox = new ListBox()
     val colorMap = exampleConstants.colorMap()
-    for (entry <- colorMap.entrySet()) {
-      val key = entry.getKey()
-      val value = entry.getValue()
-      colorBox.addItem(value, key)
-    }
+    for ((k, v) <- colorMap)
+      colorBox.addItem(v, k)
     layout.setHTML(3, 0, exampleConstants.favoriteColor())
     layout.setWidget(3, 1, colorBox)
 
