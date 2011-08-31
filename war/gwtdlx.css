@@ -1,0 +1,74 @@
+body {
+  color:#fff;
+  background:#666;
+  font-family: arial,sans-serif;
+}
+
+p.chunky {
+  font-family: arial,sans-serif;
+  font-size: 200%;
+  font-weight; bold;
+  color: #fff;
+  padding-bottom: 0.5em;
+  margin: 0;
+}
+
+div#contents {
+  width: 30em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div#button {
+  padding-top: 1em;
+}
+
+button {
+  border: 4px solid #666;
+  margin: 4px;
+  font-family: arial,sans-serif;
+  font-size: 2em;
+  font-weight; bold;
+  color: #666;
+  margin: 0;
+}
+
+table.board {
+  font-family: monospace;
+  font-size: 150%;
+}
+
+td {
+  width: 30px;
+  height: 30px;
+}
+
+td.spacer {
+  width: 10px;
+}
+
+th.spacer {
+  height: 10px;
+}
+
+td input {
+  font-size: 1.5em;
+  border: 0;
+}
+
+.cell {
+  background-color: white;
+  color:#666;
+  text-align: center;
+  width: 1em;
+}
+
+.fail {
+  font-size: 6em;
+}
+
+#ajax {
+  position: absolute;
+  float: left;
+  top: 0px;
+}
