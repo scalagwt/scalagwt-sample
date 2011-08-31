@@ -44,6 +44,7 @@
       <arg line="${gwt.args}"/>
       <arg value="com.google.gwt.sample.jribble.Hello"/>
       <arg value="com.google.gwt.sample.showcase.Showcase"/>
+      <arg value="com.google.gwt.sample.gwtdlx.gwtdlx"/>
     </java>
   </target>
   
@@ -118,6 +119,7 @@
   <target name="clean" description="Cleans this project">
     <delete dir="war/WEB-INF/classes" failonerror="false" />
     <delete dir="war/WEB-INF/jribble" failonerror="false" />
+    <delete dir="war/WEB-INF/gwtdlx" failonerror="false" />
     <delete dir="war/hello" failonerror="false" />
     <delete dir="war/showcase" failonerror="false" />
     <delete dir="gwt-unitCache" failonerror="false" />
