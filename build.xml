@@ -50,7 +50,7 @@
   
   <taskdef name="scalac" classname="scala.tools.ant.Scalac" classpathref="scala.class.path"/>
 
-  <target name="scalac" description="Scalac compile to jribble">
+  <target name="scalac" description="Scalac compile to jribble" depends="greetings">
     <mkdir dir="war/WEB-INF/jribble"/>
     <!-- TODO(grek): We should have a proper javabootclasspath here -->
     <scalac srcdir="src" destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
@@ -80,22 +80,6 @@
     </scalac>
   </target>
 
-  <!-- temporary target to compile the showcase sample to jvm bytecode until jribble can be used -->
-  <target name="scalac-jvm" description="Scalac compile showcase to jvm bytecode">
-    <mkdir dir="war/WEB-INF/jribble"/>
-    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/jribble">
-      <classpath refid="project.class.path"/>
-    </scalac>
-  </target>
-
-  <!-- temporary target to try compiling the showcase sample to jribble -->
-  <target name="scalac-jribble" description="Scalac compile showcase to jribble">
-    <mkdir dir="war/WEB-INF/jribble"/>
-    <scalac srcdir="src" includes="**"  destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
-      <classpath refid="project.class.path"/>
-    </scalac>
-  </target>
-
   <target name="devmode" depends="scalac" description="Run development mode">
     <java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
       <classpath>
@@ -108,6 +92,19 @@
       <arg line="${gwt.args}"/>
       <arg value="com.google.gwt.sample.jribble.Hello"/>
     </java>
+  </target>
+  
+  <target name="greetings" description="Greetins from Scala+GWT project.">
+    <echo message="Greetings from Scala+GWT project! Thanks for checking it out."/>
+    <echo message=""/>
+    <echo message="********************************************************************************"/>
+    <echo message="*                                  WARNING                                     *"/>
+    <echo message="* Scala+GWT compilation process is mind-bogglingly slow at the moment.         *"/>
+    <echo message="* First run takes several minutes to compile, subsequent runs are              *"/>
+    <echo message="* considerably faster but still very slow. We are aware of that and we are     *"/>
+    <echo message="* working to fix that. Thanks for your patience while waiting for Scala to     *"/>
+    <echo message="* run in a browser!                                                            *"/>
+    <echo message="********************************************************************************"/>
   </target>
 
   <target name="build" depends="gwtc" description="Build this project" />
