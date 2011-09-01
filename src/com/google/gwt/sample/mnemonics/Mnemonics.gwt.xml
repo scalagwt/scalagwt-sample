@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='mnemonics'>
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='ScalaLibrary'/>
+  <entry-point class='com.google.gwt.sample.mnemonics.client.Mnemonics'/>
+  <source path='client'/>
+  
+  <!-- Use google-code-prettify to pretty-print source code -->
+  <script src="prettify.js" />
+  <script src="lang-scala.js" />
+  <stylesheet src="prettify.css" />
+  <stylesheet src="bootstrap-1.1.1.css" />
+</module>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Phone mnemonics</title>
+    <style>
+      input#phonenumber {
+        font-size: 22px;
+        height: 30px;
+      }
+      div.input {
+        padding-top: 20px;
+        padding-bottom: 30px;
+      }
+      div.output {
+        font-family: "museo-slab-1","museo-slab-2",Georgia,"Times New Roman",serif;
+        color: #BF3604;
+        font-size: 28px;
+        line-height: 34px;
+      }
+      div.hidden {
+        visibility: hidden;
+      }
+    </style>
+    <script type="text/javascript" language="javascript" src="mnemonics/mnemonics.nocache.js"></script>
+  </head>
+
+  <body>
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+    <div class="container" id="main">
+      <div class="page-header">
+        <h1>Phone mnemonics
+            <small>Scala collections in a browser</small>
+        </h1>
+      </div>
+      <div class="modal hidden" style="position: fixed; top: 100px; left: 380px; margin: 0 auto; z-index: 1" id="implicitcat">
+        <div class="modal-header">
+          <h3>Oh, don't do that, or implicit-cat will get you</h3>
+          <a href="javascript:(document.getElementById('implicitcat').className += ' hidden');void(0);" class="close">×</a>
+        </div>
+        <div class="modal-body">
+          <img src="mnemonics/implicit-cat.png">
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+      <div class="row">
+        <div class="span9 columns">
+          <section id="overview">
+            <img src="mnemonics/phone-small.jpg">
+            <p class="small"><small>Image taken from http://www.flickr.com/photos/gadgetgirl70/225913840/ (CC license)</small></p>
+          </section>
+        </div>
+        <div class="span7 columns">
+          <h2 >This is the phone mnemonics problem tested in <a
+          href="http://page.mi.fu-berlin.de/prechelt/Biblio/jccpprt_computer2000.pdf">a
+          well-known empirical comparison of seven programming languages</a>.
+          The Scala version is as short as the scripting-language solutions.
+          Through the use of GWT, the Scala code can run directly within the web
+          browser and not need any server-side support.</h3>
+        </div>
+      </div>
+      <section id="run">
+        <h3>Enter phone number</h3>
+      </section>
+    </div>
+    <div class="container" id="srccode">
+      <div class="page-header">
+        <h2>Source code
+            <small>Original code compiles straight to JS</small>
+        </h2>
+      </div>
+      <p>We decided to exclude code handling page updates. GWT libraries didn't get Scala's
+        <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=179766">pimp-love</a> yet so it's not pretty.</p>
+      <!-- We probably would like to have some dynamic inclusion mechanism (e.g. at build time) but I'll leave it for others to improve -->
+      <pre class="prettyprint lang-scala linenums">
+package com.google.gwt.sample.mnemonics.client
+
+/** Taken from presentation by Martin Odersky at OSCON 2011 */
+class Coder(words: List[String]) {
+
+  private val mnemonics = Map(
+    '2' -> "ABC", '3' -> "DEF", '4' -> "GHI", '5' -> "JKL",
+    '6' -> "MNO", '7' -> "PQRS", '8' -> "TUV", '9' -> "WXYZ")
+
+  /** Invert the mnemonics map to give a map from chars 'A' ... 'Z' to '2' ... '9' */
+  private val charCode: Map[Char, Char] =
+    for ((digit, str) <- mnemonics; ltr <- str) yield (ltr -> digit)
+
+  /** Maps a word to the digit string it can represent, e.g. "Java" -> "5282" */
+  def wordCode(word: String) = word.toUpperCase map charCode
+
+  /** A map from digit strings to the words that represent them,
+    * e.g. "5282" -> Set("Java", "Kata", "Lava", ...) */
+  private val wordsForNum: Map[String, List[String]] = (words groupBy wordCode) withDefaultValue List()
+
+  /** Return all ways to encode a number as a list of words */
+  def encode(number: String): Set[List[String]] =
+    if (number.isEmpty)
+      Set(List())
+    else {
+      for {
+        splitPoint <- 1 to number.length
+        word <- wordsForNum(number take splitPoint)
+        rest <- encode(number drop splitPoint)
+      } yield word :: rest
+    }.toSet
+
+  /** Maps a number to a list of all word phrases that can represent it */
+  def translate(number: String): Set[String] = encode(number) map (_ mkString " ")
+}</pre>
+    </div>
+  </body>
+</html>
