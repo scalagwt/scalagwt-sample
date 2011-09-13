@@ -78,7 +78,7 @@ object ContentWidget {
  * <li>.sc-ContentWidget-description { Applied to the description }</li>
  * </ul>
  */
-abstract class ContentWidget(constants: ContentWidget.CwConstants) extends LazyPanel with SelectionHandler[Integer] {
+abstract class ContentWidget(constants: ContentWidget.CwConstants) extends LazyPanel with SelectionHandler[java.lang.Integer] {
 
   /**
    * The default style name.
@@ -197,7 +197,7 @@ abstract class ContentWidget(constants: ContentWidget.CwConstants) extends LazyP
   def onInitializeComplete(): Unit = {
   }
 
-  def onSelection(event: SelectionEvent[Integer]): Unit = {
+  def onSelection(event: SelectionEvent[java.lang.Integer]): Unit = {
     // Show the associated widget in the deck panel
     val tabIndex = event.getSelectedItem().intValue()
     deckPanel.showWidget(tabIndex)
