@@ -13,7 +13,6 @@
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
-    <pathelement location="lib/scala/scala-library-jribble.jar"/>
     <fileset dir="lib/gwt" includes="*.jar"/>
     <!-- Add any additional non-server libs (such as JUnit) -->
     <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
@@ -36,6 +35,7 @@
         <pathelement location="src"/>
         <pathelement location="war/WEB-INF/jribble"/>
         <path refid="project.class.path"/>
+        <pathelement location="lib/scala/scala-library-gwt.jar"/>
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx512M"/>
@@ -61,21 +61,10 @@
       <classpath refid="project.class.path.library-gwt"/>
     </scalac>
     <mkdir dir="war/WEB-INF/classes"/>
-    <!-- TODO(grek): We should have a proper javabootclasspath here -->
-    <scalac srcdir="src" destdir="war/WEB-INF/classes" addparams="${scala.args}">
-      <include name="**/*.scala"/>
-      <include name="**/*.java"/>
-      <exclude name="**/generator/*.scala"/>
-      <classpath refid="project.class.path.library-gwt"/>
-    </scalac>
     <javac srcdir="src" destdir="war/WEB-INF/classes">
       <classpath refid="project.class.path.library-gwt"/>
     </javac>
     <scalac srcdir="src" destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
-      <include name="**/generator/*.scala"/>
-      <classpath refid="project.class.path"/>
-    </scalac>
-    <scalac srcdir="src" destdir="war/WEB-INF/classes" addparams="${scala.args}">
       <include name="**/generator/*.scala"/>
       <classpath refid="project.class.path"/>
     </scalac>
