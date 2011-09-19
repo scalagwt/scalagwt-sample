@@ -2,26 +2,22 @@
 <project name="Hello" default="build" basedir=".">
   <!-- Arguments -style PRETTY or -logLevel DEBUG to gwtc and devmode targets -->
   <property name="gwt.args" value="-draftCompile -ea -style pretty -logLevel TRACE" />
-  <property name="scala.args" value="-g:notailcalls -Xplugin:${basedir}/lib/scala/factorymanifests.jar -Xplugin:lib/scala/continuations.jar -P:continuations:enable"/>
+  <property name="scala.args" value="-g:notailcalls -Xplugin:${basedir}/lib/scala/factorymanifests.jar -Xplugin:lib/scala/continuations.jar -P:continuations:enable -Yjribble-text"/>
 
   <path id="scala.class.path">
     <fileset dir="lib/scala">
       <include name="scala-compiler.jar"/>
       <include name="scala-library.jar"/>
+      <include name="protobuf-java-2.4.1.jar"/>
     </fileset>
   </path>
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
     <fileset dir="lib/gwt" includes="*.jar"/>
+    <pathelement location="lib/scala/scala-library-gwt.jar"/>
     <!-- Add any additional non-server libs (such as JUnit) -->
     <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
-    <path refid="scala.class.path"/>
-  </path>
-  
-  <path id="project.class.path.library-gwt">
-    <pathelement location="lib/scala/scala-library-gwt.jar"/>
-    <path refid="project.class.path"/>
   </path>
 
   <target name="libs" description="Copy libs to WEB-INF/lib">
@@ -35,12 +31,10 @@
         <pathelement location="src"/>
         <pathelement location="war/WEB-INF/jribble"/>
         <path refid="project.class.path"/>
-        <pathelement location="lib/scala/scala-library-gwt.jar"/>
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx512M"/>
       <jvmarg value="-Dx.gwt.astBuilder=true"/>
-      <jvmarg value="-Dgwt.scalalibrary.path=${basedir}/lib/scala/scala-library-gwt.jar"/>
       <arg line="${gwt.args}"/>
       <arg value="com.google.gwt.sample.jribble.Hello"/>
       <arg value="com.google.gwt.sample.mnemonics.Mnemonics"/>
@@ -57,17 +51,12 @@
     <scalac srcdir="src" destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
       <include name="**/*.scala"/>
       <include name="**/*.java"/>
-      <exclude name="**/generator/*.scala"/>
-      <classpath refid="project.class.path.library-gwt"/>
+      <classpath refid="project.class.path"/>
     </scalac>
     <mkdir dir="war/WEB-INF/classes"/>
     <javac srcdir="src" destdir="war/WEB-INF/classes">
-      <classpath refid="project.class.path.library-gwt"/>
-    </javac>
-    <scalac srcdir="src" destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
-      <include name="**/generator/*.scala"/>
       <classpath refid="project.class.path"/>
-    </scalac>
+    </javac>
   </target>
 
   <target name="devmode" depends="scalac" description="Run development mode">
