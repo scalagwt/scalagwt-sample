@@ -2,6 +2,7 @@
 <project name="Hello" default="build" basedir=".">
   <!-- Arguments -style PRETTY or -logLevel DEBUG to gwtc and devmode targets -->
   <property name="gwt.args" value="-draftCompile -ea -style pretty -logLevel TRACE" />
+  <property name="gwt.dev.args" value="-logLevel TRACE" />
   <property name="scala.args" value="-g:notailcalls -Xplugin:${basedir}/lib/scala/factorymanifests.jar -Xplugin:lib/scala/continuations.jar -P:continuations:enable -Yjribble-text"/>
 
   <path id="scala.class.path">
@@ -63,12 +64,14 @@
     <java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
       <classpath>
         <pathelement location="src"/>
+        <pathelement location="war/WEB-INF/jribble"/>
         <path refid="project.class.path"/>
       </classpath>
-      <jvmarg value="-Xmx256M"/>
+      <jvmarg value="-Xmx512M"/>
+      <jvmarg value="-Dx.gwt.astBuilder=true"/>
       <arg value="-startupUrl"/>
       <arg value="Hello.html"/>
-      <arg line="${gwt.args}"/>
+      <arg line="${gwt.dev.args}"/>
       <arg value="com.google.gwt.sample.jribble.Hello"/>
     </java>
   </target>

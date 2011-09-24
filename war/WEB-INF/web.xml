@@ -4,17 +4,8 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+  <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>GwtDlx.html</welcome-file>
+    <welcome-file>HelloWorld.html</welcome-file>
   </welcome-file-list>
-  
-  <servlet>
-    <servlet-name>sudokuApi</servlet-name>
-    <servlet-class>com.google.gwt.sample.gwtdlx.server.SudokuApiImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>sudokuApi</servlet-name>
-    <url-pattern>/gwtdlx/solve</url-pattern>
-  </servlet-mapping>
 </web-app>
