@@ -46,7 +46,7 @@
   
   <taskdef name="scalac" classname="scala.tools.ant.Scalac" classpathref="scala.class.path"/>
 
-  <target name="scalac" description="Scalac compile to jribble" depends="greetings">
+  <target name="scalac" description="Scalac compile to jribble">
     <mkdir dir="war/WEB-INF/jribble"/>
     <!-- TODO(grek): We should have a proper javabootclasspath here -->
     <scalac srcdir="src" destdir="war/WEB-INF/jribble" target="jribble" addparams="${scala.args}">
@@ -74,19 +74,6 @@
       <arg line="${gwt.dev.args}"/>
       <arg value="com.google.gwt.sample.jribble.Hello"/>
     </java>
-  </target>
-  
-  <target name="greetings" description="Greetins from Scala+GWT project.">
-    <echo message="Greetings from Scala+GWT project! Thanks for checking it out."/>
-    <echo message=""/>
-    <echo message="********************************************************************************"/>
-    <echo message="*                                  WARNING                                     *"/>
-    <echo message="* Scala+GWT compilation process is mind-bogglingly slow at the moment.         *"/>
-    <echo message="* First run takes several minutes to compile, subsequent runs are              *"/>
-    <echo message="* considerably faster but still very slow. We are aware of that and we are     *"/>
-    <echo message="* working to fix that. Thanks for your patience while waiting for Scala to     *"/>
-    <echo message="* run in a browser!                                                            *"/>
-    <echo message="********************************************************************************"/>
   </target>
 
   <target name="build" depends="gwtc" description="Build this project" />
