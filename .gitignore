@@ -1,5 +1,7 @@
 /war/hello/
 /war/showcase/
+/war/mnemonics/
+/war/gwtdlx/
 /war/WEB-INF/classes/
 /war/WEB-INF/deploy/
 /war/WEB-INF/lib/gwt-servlet.jar
@@ -11,3 +13,5 @@
 .settings/
 jribbleCache
 gwt-unitCache
+.externalToolBuilders/
+.gwt/
