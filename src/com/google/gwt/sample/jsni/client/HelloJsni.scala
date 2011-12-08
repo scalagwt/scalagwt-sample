@@ -1,6 +1,6 @@
 package com.google.gwt.sample.jsni.client
 
-//import scala.util.nativeCode
+import scala.util.nativeCode
 
 import com.google.gwt.core.client.EntryPoint
 import com.google.gwt.core.client.JavaScriptObject
