@@ -128,6 +128,8 @@ class GwtDlx extends EntryPoint {
                ajax.setVisible(false)
             }
          }
+         //TODO(grek): Work-around for CPS-vpm interaction problem.
+         ()
       }
    }
 }
