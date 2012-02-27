@@ -116,19 +116,20 @@ class GwtDlx extends EntryPoint {
       sched {
          val result = (Sudoku(board)).solve
          ajax.setVisible(false)
-         //TODO(grek): Changed pattern patch on Option to if due to collision
-         //between Yvirtpatmat and CPS plugin. Changed back once it's fixed upstream.
-         if (result.isDefined) {
-           val soln = result.get
-           noSolution.setVisible(false)
-           for (r <- 0 until soln.length) {
-              for (c <- 0 until soln(r).length) {
-                 getBox(r, c).setValue(soln(r)(c) + "")
-              }
-           }
-           ajax.setVisible(false)
-         } else
-            noSolution.setVisible(true)
+         result match {
+            case None => noSolution.setVisible(true)
+            case Some(soln) => {
+               noSolution.setVisible(false)
+               for (r <- 0 until soln.length) {
+                  for (c <- 0 until soln(r).length) {
+                     getBox(r, c).setValue(soln(r)(c) + "")
+                  }
+               }
+               ajax.setVisible(false)
+            }
+         }
+         //TODO(grek): Work-around for CPS-vpm interaction problem.
+         ()
       }
    }
 }
