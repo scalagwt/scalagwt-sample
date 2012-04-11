@@ -1,5 +1,5 @@
-#Mon Oct 31 23:24:12 CET 2011
-P=continuations\:enable
+#Tue Apr 03 15:29:58 CEST 2012
+P=
 Xcheck-null=false
 Xcheckinit=false
 Xdisable-assertions=false
@@ -10,7 +10,7 @@ Xfuture=false
 Xlog-implicits=false
 Xmigration=false
 Xno-uescape=false
-Xplugin-require=continuations
+Xplugin-require=
 Xpluginsdir=misc/scala-devel/plugins
 Ybuild-manager-debug=true
 Yno-generic-signatures=false
@@ -53,6 +53,7 @@ nowarn=false
 optimise=false
 scala.compiler.additionalParams=-Yjribble-text
 scala.compiler.useProjectSettings=true
+stopBuildOnError=false
 syntaxColouring.bracket.bold=false
 syntaxColouring.bracket.colour=0,0,0
 syntaxColouring.bracket.italic=false
